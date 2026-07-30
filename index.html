@@ -16,25 +16,25 @@
 
 .room-panel{background:#f7fbfa;border:1px solid #dbe8e6;border-radius:18px;padding:14px;margin-bottom:14px}.room-code{font-size:26px;font-weight:900;letter-spacing:.18em;color:var(--rail)}.room-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.dice-count{font-size:18px;font-weight:900}.inventory{display:grid;gap:8px}.inventory-card{background:#fff8d9;border-radius:14px;padding:11px}.overlay-lock{position:fixed;inset:0;background:linear-gradient(160deg,#e9f8f7,#c9e8ec 48%,#f7efe0);z-index:90;display:flex;align-items:center;justify-content:center;padding:20px}.overlay-lock.hidden{display:none}.join-card{width:min(430px,100%);background:white;border-radius:28px;padding:22px;box-shadow:var(--shadow)}.join-card input{width:100%;border:1px solid #cfdedd;border-radius:13px;padding:13px;text-transform:uppercase;letter-spacing:.15em;margin-top:10px}
 
-/* Railopoly v1.0.0 app shell */
-.hidden{display:none!important}
-.app-shell{position:relative}
-.landing-page{position:fixed;inset:0;z-index:90;background:#25add7;overflow:auto}
-.app-entry{position:relative;width:min(100vw,520px);min-height:100svh;margin:auto;background:#25add7 url("./railopoly-home.png") center top/100% auto no-repeat}
+/* Railopoly v1.0.0 entrance */
+.overlay-lock{background:#25add7;padding:0;overflow:auto;align-items:flex-start}
+.app-entry{position:relative;width:min(100vw,520px);min-height:100svh;margin:auto;background:#25add7 url("./railopoly-home.png") center top/100% auto no-repeat;padding-bottom:160px}
 .app-entry-spacer{aspect-ratio:900/1792;width:100%}
-.entry-actions{position:absolute;left:8%;right:8%;bottom:2.5%;display:grid;grid-template-columns:1fr 1fr;gap:4%;height:10%}
-.entry-hotspot{border:0;background:transparent;border-radius:22px;color:transparent;-webkit-tap-highlight-color:transparent}
-.entry-hotspot:active{background:rgba(255,255,255,.18)}
-.continue-room{position:absolute;left:10%;right:10%;bottom:13.5%;border:2px solid rgba(255,255,255,.78);border-radius:16px;padding:11px 14px;background:rgba(7,71,91,.88);color:white;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.entry-actions{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(30px + env(safe-area-inset-bottom));width:min(480px,calc(100% - 28px));display:grid;grid-template-columns:1fr 1fr;gap:10px;z-index:94}
+.entry-hotspot{border:2px solid rgba(91,48,13,.42);border-radius:18px;padding:15px 10px;color:#4b2d13;font-weight:900;font-size:18px;box-shadow:0 8px 18px rgba(0,0,0,.22);-webkit-tap-highlight-color:transparent}
+.entry-hotspot.create{background:linear-gradient(145deg,#ffd86d,#f6bd39)}
+.entry-hotspot.join{background:linear-gradient(145deg,#ffb39f,#ef7b62)}
+.entry-hotspot.rules{grid-column:1/-1;background:rgba(7,71,91,.94);color:white;border-color:rgba(255,255,255,.35);padding:11px}
+.entry-hotspot:active{transform:scale(.98)}
 .join-pop{position:fixed;inset:0;z-index:95;background:rgba(4,30,42,.72);display:none;align-items:center;justify-content:center;padding:20px}
 .join-pop.show{display:flex}.join-pop .join-card{position:relative}
 .join-close{position:absolute;right:14px;top:12px;border:0;background:#edf5f4;border-radius:999px;width:36px;height:36px;font-size:20px}
-.app-version{position:fixed;left:0;right:0;bottom:calc(5px + env(safe-area-inset-bottom));text-align:center;font-size:11px;color:rgba(0,50,70,.75);pointer-events:none;z-index:96}
+.app-version{position:fixed;left:0;right:0;bottom:calc(7px + env(safe-area-inset-bottom));text-align:center;font-size:11px;color:rgba(0,50,70,.75);pointer-events:none;z-index:96}
 @media (min-width:600px){.app-entry{box-shadow:0 0 50px rgba(0,0,0,.25)}}
 </style>
 </head>
 <body>
-<div id="appShell" class="app app-shell hidden">
+<div class="app">
 <header class="hero"><div class="brand"><div class="logo">🚂</div><div><h1>Railopoly</h1><p class="subtitle">台灣鐵路環島大富翁｜三天兩夜版</p></div></div></header>
 <main>
 <section id="home" class="page active"><div id="permissionBanner" class="permission"></div>
@@ -49,58 +49,25 @@
 </section>
 <section id="players" class="page"><div class="panel"><h3 class="section-title">六位玩家</h3><div id="playerList" class="players"></div></div><div class="panel"><h3 class="section-title">積分排行</h3><div id="ranking" class="rank"></div></div></section>
 <section id="roles" class="page"><div id="roleTools"></div></section>
-<section id="settings" class="page"><div class="panel settings"><h3 class="section-title">房間</h3><div id="roomInfo"></div><button class="secondary" style="width:100%;margin-top:10px" onclick="leaveRoom()">離開房間</button><button class="secondary" style="width:100%;margin-top:8px" onclick="showLanding()">回到標題畫面</button></div><div class="panel settings"><h3 class="section-title">身分與職位</h3><p class="subtitle">先選擇這支手機目前由哪位玩家使用，再為六位玩家分配六個不同職位。</p><label>這支手機的玩家</label><select id="devicePlayer" onchange="setDevicePlayer(this.value)"></select><div id="roleInputs" class="role-grid"></div></div><div class="panel settings"><h3 class="section-title">玩家名稱</h3><div id="nameInputs"></div></div><div class="panel settings"><h3 class="section-title">主持人管理</h3><div id="hostManagement"></div></div><div class="panel settings"><h3 class="section-title">遊戲管理</h3><p class="subtitle">主持人可開始或重設遊戲。資料會即時同步到 Firebase 雲端；每支手機請在上方選擇自己的玩家身分。</p><button id="startBtn" class="mini" style="width:100%;margin-top:16px;padding:12px" onclick="startOfficialGame()">正式開始三日遊戲</button><button id="resetBtn" class="danger" onclick="resetGame()">清除目前資料並回到測試模式</button></div></section>
+<section id="settings" class="page"><div class="panel settings"><h3 class="section-title">房間</h3><div id="roomInfo"></div><button class="secondary" style="width:100%;margin-top:10px" onclick="leaveRoom()">離開房間</button></div><div class="panel settings"><h3 class="section-title">身分與職位</h3><p class="subtitle">先選擇這支手機目前由哪位玩家使用，再為六位玩家分配六個不同職位。</p><label>這支手機的玩家</label><select id="devicePlayer" onchange="setDevicePlayer(this.value)"></select><div id="roleInputs" class="role-grid"></div></div><div class="panel settings"><h3 class="section-title">玩家名稱</h3><div id="nameInputs"></div></div><div class="panel settings"><h3 class="section-title">主持人管理</h3><div id="hostManagement"></div></div><div class="panel settings"><h3 class="section-title">遊戲管理</h3><p class="subtitle">主持人可開始或重設遊戲。資料會即時同步到 Firebase 雲端；每支手機請在上方選擇自己的玩家身分。</p><button id="startBtn" class="mini" style="width:100%;margin-top:16px;padding:12px" onclick="startOfficialGame()">正式開始三日遊戲</button><button id="resetBtn" class="danger" onclick="resetGame()">清除目前資料並回到測試模式</button></div></section>
 </main>
 </div>
-<nav id="bottomNav" class="bottom hidden"><button class="nav active" data-page="home" onclick="showPage('home',this)"><b>🏠</b>遊戲</button><button class="nav" data-page="players" onclick="showPage('players',this)"><b>👥</b>玩家</button><button class="nav" data-page="roles" onclick="showPage('roles',this)"><b>🧭</b>職務</button><button class="nav" data-page="settings" onclick="showPage('settings',this)"><b>⚙️</b>設定</button></nav>
-<section id="landingPage" class="landing-page" aria-label="Railopoly 首頁">
-  <div class="app-entry">
-    <div class="app-entry-spacer"></div>
-    <div class="entry-actions">
-      <button class="entry-hotspot" aria-label="建立房間" onclick="createRoom()">建立房間</button>
-      <button class="entry-hotspot" aria-label="加入房間" onclick="openJoinPanel()">加入房間</button>
-    </div>
-    <button id="continueRoomBtn" class="continue-room hidden" onclick="continueRoom()"></button>
-  </div>
-  <div class="app-version">Version 1.0.0</div>
-</section><div id="joinPop" class="join-pop"><div class="join-card"><button class="join-close" onclick="closeJoinPanel()" aria-label="關閉">×</button><div class="brand"><div class="logo">🚂</div><div><h1>加入房間</h1><p class="subtitle">輸入主持人提供的 6 碼房號</p></div></div><label style="display:block;margin-top:18px">房號</label><input id="joinRoomCode" maxlength="6" placeholder="例如 A8K3P2"><button class="primary" style="width:100%;margin-top:12px" onclick="joinRoom()">加入房間</button></div></div><div id="modal" class="modal" onclick="backdrop(event)"><div id="modalBody"></div></div>
+<nav class="bottom"><button class="nav active" data-page="home" onclick="showPage('home',this)"><b>🏠</b>遊戲</button><button class="nav" data-page="players" onclick="showPage('players',this)"><b>👥</b>玩家</button><button class="nav" data-page="roles" onclick="showPage('roles',this)"><b>🧭</b>職務</button><button class="nav" data-page="settings" onclick="showPage('settings',this)"><b>⚙️</b>設定</button></nav>
+<div id="roomGate" class="overlay-lock"><div class="app-entry" aria-label="Railopoly 首頁"><div class="app-entry-spacer"></div><div class="entry-actions"><button class="entry-hotspot create" aria-label="建立房間" onclick="createRoom()">🎲 建立房間</button><button class="entry-hotspot join" aria-label="加入房間" onclick="openJoinPanel()">🎟️ 加入房間</button><button class="entry-hotspot rules" aria-label="遊戲規則" onclick="showGameRules()">📖 遊戲規則</button></div></div></div><div id="joinPop" class="join-pop"><div class="join-card"><button class="join-close" onclick="closeJoinPanel()" aria-label="關閉">×</button><div class="brand"><div class="logo">🚂</div><div><h1>加入房間</h1><p class="subtitle">輸入主持人提供的 6 碼房號</p></div></div><label style="display:block;margin-top:18px">房號</label><input id="joinRoomCode" maxlength="6" placeholder="例如 A8K3P2"><button class="primary" style="width:100%;margin-top:12px" onclick="joinRoom()">加入房間</button></div></div><div class="app-version">Version 1.0.0</div><div id="modal" class="modal" onclick="backdrop(event)"><div id="modalBody"></div></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
-const APP_VERSION='1.0.0';
-function updateContinueButton(){
- const btn=document.getElementById('continueRoomBtn');
- if(!btn)return;
- if(roomId){btn.textContent=`繼續房間 ${roomId}`;btn.classList.remove('hidden')}
- else btn.classList.add('hidden');
-}
-function showLanding(){
- document.getElementById('landingPage').classList.remove('hidden');
- document.getElementById('appShell').classList.add('hidden');
- document.getElementById('bottomNav').classList.add('hidden');
- updateContinueButton();
-}
-function enterGame(){
- document.getElementById('landingPage').classList.add('hidden');
- document.getElementById('appShell').classList.remove('hidden');
- document.getElementById('bottomNav').classList.remove('hidden');
-}
-async function continueRoom(){
- if(!roomId)return;
- if(!auth.currentUser)return alert('仍在登入 Firebase，請稍候再試。');
- enterGame();
- await connectRoom(false);
-}
 function openJoinPanel(){document.getElementById('joinPop').classList.add('show');setTimeout(()=>document.getElementById('joinRoomCode')?.focus(),50)}
 function closeJoinPanel(){document.getElementById('joinPop').classList.remove('show')}
-/* ===== Firebase ===== */
+function showGameRules(){
+ modalBody.innerHTML=`<div class="card" style="--accent:var(--rail)"><div class="card-type">遊戲規則</div><div class="card-icon">🚂</div><h2>Railopoly</h2><p>• 全場共用骰子，初始為 1 顆。\n• 骰子總點數為 5 或 6 的倍數時，若位於支線入口，可依規則進入支線。\n• 機會卡可選擇立即使用或稍後保存。\n• 命運卡抽到後立即生效。\n• 房間內的卡片、骰子與遊戲資料會同步給所有玩家。</p><div class="card-actions" style="grid-template-columns:1fr"><button class="action close" onclick="closeModal()">關閉</button></div></div>`;modal.classList.add('show')
+}
 const firebaseConfig={apiKey:"AIzaSyCKXoFSvJUWQ8QDNNmQuJvAwSzYKZ5EELM",authDomain:"railopoly.firebaseapp.com",projectId:"railopoly",storageBucket:"railopoly.firebasestorage.app",messagingSenderId:"799199740741",appId:"1:799199740741:web:742802d2643c3a43c4742c",measurementId:"G-1W57QHQCZF"};
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(),db=firebase.firestore();
 let roomRef=null,roomUnsub=null,roomId=(localStorage.getItem("railopolyRoomId")||"").toUpperCase();
 let cloudReady=false,applyingCloud=false,lastSeenSharedCard="";
-/* ===== Game data ===== */
 const cards={
 chance:[
 ["加開列車","使用後，全場共用骰子永久增加 1 顆；機會卡最多增加至 3 顆。","🎲","diceUp"],["準點之神","今天的列車完美準點。立即獲得 200 遊戲幣。","🚆"],["幸運靠窗座","下一次擲骰可以重骰一次，並選擇較好的結果。","🪟"],["在地人報路","向一位路人問一個附近推薦；完成後積分 +20。","🗣️"],["旅途小確幸","獲得 100 遊戲幣。","✨"],["免費通行券","下一次通過他人領地時免付一次過路費。","🎫"],["神級取景","立即拍一張最有旅行感的照片；完成後積分 +20。","📸"],["車站限定款","找到任何有車站名稱的物品並拍照；完成後獲得 100 遊戲幣。","🏷️"],["好心店家","店家熱情招待，獲得 200 遊戲幣。","🤝"],["最佳旅伴","指定一位玩家，你們各獲得 100 遊戲幣。","🫶"],["一路綠燈","下一次骰子點數 +1，最高仍為 6。","🚦"],["環島能量補給","全體一起喝一口水；抽卡者積分 +10。","💧"],["旅遊之神眷顧","再抽一張機會卡。","🌟"],["今日攝影師","替其他五位玩家拍一張合照；完成後積分 +20。","📷"],["名產試吃運","找到免費試吃或與朋友分享一口食物；獲得 100 遊戲幣。","🍡"],["完美轉乘","可以立刻再擲一次骰子。","🔁"],["旅途情報王","說出下一站的一項特色；說得出來獲得 100 遊戲幣。","🧠"],["意外中獎","獲得 300 遊戲幣。","🎉"],["交換好運","與任一玩家交換手上的 100 遊戲幣。若其中一方沒有則不執行。","🔄"],["支線邀請函","本次若經過支線入口，可直接選擇進入支線。","🌿"],["鐵道迷認證","拍到一張列車、月台或鐵軌照片；積分 +20。","🚉"],["省錢達人","下一次需要支付遊戲幣時減免 100。","🐷"],["車長特別照顧","選擇：獲得 200 遊戲幣，或積分 +20。","🧑‍✈️"],["旅行好天氣","所有人一起做晴天姿勢合照；抽卡者積分 +20。","☀️"],["神秘紅包","從其他五位玩家中擲骰決定一人，向他收取 100 遊戲幣。","🧧"]],
@@ -127,7 +94,6 @@ if(!state.navigator)state.navigator={station:'',toilet:'',luggage:'',transfer:''
 if(!state.medical)state.medical={checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0};
 if(state.devicePlayer===undefined)state.devicePlayer=0;
 state.players=state.players.map((p,i)=>({...p,role:p.role||roles[i].name,chanceCards:Array.isArray(p.chanceCards)?p.chanceCards:[]}));
-/* ===== Game state helpers ===== */
 function currentUser(){return state.players[state.devicePlayer]||state.players[0]}
 function hasRole(name){return currentUser().role===name}
 function playerGroupIndex(i){return state.grouping.groups.findIndex(g=>g.members.includes(i))}
@@ -170,7 +136,7 @@ function useChanceCard(id){
  card.status='used';if(state.sharedCard?.id===id)state.sharedCard.status='used';save();closeModal()
 }
 function showCard(type,c,id){const names={chance:'機會卡',fate:'命運卡',task:'任務卡'},colors={chance:'var(--chance)',fate:'var(--fate)',task:'var(--task)'};modalBody.innerHTML=`<div class="card" style="--accent:${colors[type]}"><div class="card-type">${names[type]}</div><div class="card-id">#${String(id).padStart(3,'0')}</div><div class="card-icon">${c[2]}</div><h2>${c[0]}</h2><p>${c[1]}</p><div class="note">由本輪擲骰玩家立即執行；需要存證的任務請拍照或錄影。</div><div class="card-actions"><button class="action close" onclick="closeModal()">關閉</button><button class="action done" onclick="closeModal();nextTurn()">完成並換人</button></div></div>`;modal.classList.add('show')}
-function rollDice(){if(!canPlay()){alert('目前不是你的回合；只有本輪玩家或主持人可以操作。');return}const count=Math.max(1,Math.min(5,state.game.diceCount||1)),rolls=Array.from({length:count},()=>1+Math.floor(Math.random()*6)),faces=['⚀','⚁','⚂','⚃','⚄','⚅'],total=rolls.reduce((a,b)=>a+b,0);logEntry('dice',`擲出 ${rolls.join('、')}，總點數 ${total}`);save();modalBody.innerHTML=`<div class="card dice-result" style="--accent:var(--rail)"><div class="card-type">${count} 顆骰子結果</div><div class="die" style="font-size:${count>3?'52px':'70px'}">${rolls.map(n=>faces[n-1]).join(' ')}</div><h2>總點數 ${total}</h2>${total>=5?'<div class="branch">🌿 若正好遇到支線入口，可依規則進入支線。</div>':''}<div class="card-actions"><button class="action close" onclick="closeModal()">關閉</button><button class="action done" onclick="closeModal();nextTurn()">完成並換人</button></div></div>`;modal.classList.add('show')}
+function rollDice(){if(!canPlay()){alert('目前不是你的回合；只有本輪玩家或主持人可以操作。');return}const count=Math.max(1,Math.min(5,state.game.diceCount||1)),rolls=Array.from({length:count},()=>1+Math.floor(Math.random()*6)),faces=['⚀','⚁','⚂','⚃','⚄','⚅'],total=rolls.reduce((a,b)=>a+b,0);logEntry('dice',`擲出 ${rolls.join('、')}，總點數 ${total}`);save();modalBody.innerHTML=`<div class="card dice-result" style="--accent:var(--rail)"><div class="card-type">${count} 顆骰子結果</div><div class="die" style="font-size:${count>3?'52px':'70px'}">${rolls.map(n=>faces[n-1]).join(' ')}</div><h2>總點數 ${total}</h2>${(total%5===0||total%6===0)?'<div class="branch">🌿 骰子總點數符合支線條件；若正好位於支線入口，可依規則進入支線。</div>':''}<div class="card-actions"><button class="action close" onclick="closeModal()">關閉</button><button class="action done" onclick="closeModal();nextTurn()">完成並換人</button></div></div>`;modal.classList.add('show')}
 function adjustDice(delta){if(!hasRole('雜務')&&!hasRole('主持人'))return alert('只有雜務或主持人可以調整骰子數量。');const before=state.game.diceCount||1;state.game.diceCount=Math.max(1,Math.min(5,before+delta));if(before!==state.game.diceCount)logEntry('dice',`後台調整全場骰子：${before} → ${state.game.diceCount} 顆`);save()}
 function nextTurn(){if(!hasRole('主持人')&&state.turn!==state.devicePlayer){alert('只有本輪玩家或主持人可以換下一位。');return}state.turn=(state.turn+1)%state.players.length;save()}
 function change(i,key,delta){
@@ -195,7 +161,6 @@ function setRole(i,v){
  state.players[i].role=v;save()
 }
 function rename(i,v){state.players[i].name=v.trim()||`玩家 ${i+1}`;save()}
-/* ===== UI rendering ===== */
 function render(){
  const user=currentUser(), role=roles.find(r=>r.name===user.role)||roles[0];
  turnName.textContent=state.players[state.turn].name;
@@ -222,21 +187,19 @@ function render(){
  hostManagement.innerHTML=hasRole('主持人')?`<label>即時公告</label><input id="announcementInput" placeholder="例如：18:30 花蓮站集合"><button class="primary" style="width:100%;margin-top:8px" onclick="postAnnouncement()">發布公告</button><div class="section-divider"></div><h4>分組管理</h4><p class="subtitle">目前：${state.grouping.active?'分組模式':'匯合模式'}</p>${state.players.map((p,i)=>`<label>${p.name}</label><select onchange="movePlayerGroup(${i},Number(this.value))">${state.grouping.groups.map((g,idx)=>`<option value="${idx}" ${g.members.includes(i)?'selected':''}>${g.name}</option>`).join('')}</select>`).join('')}<div class="tool-actions"><button class="primary" onclick="toggleGrouping(true)">開始分組</button><button class="warn" onclick="toggleGrouping(false)">結束分組（匯合）</button></div><div class="section-divider"></div><h4>最新公告</h4>${latestAnnouncements||'<div class="empty">尚無公告</div>'}`:`<div class="empty">只有主持人可以管理公告與分組。</div>`;
  startBtn.classList.toggle('locked',!hasRole('主持人'));resetBtn.classList.toggle('locked',!hasRole('主持人'));
 }
-/* ===== Navigation and lifecycle ===== */
 function showPage(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));btn.classList.add('active');render()}
 function closeModal(){modal.classList.remove('show')}
 function backdrop(e){if(e.target===modal)closeModal()}
 function startOfficialGame(){if(!hasRole('主持人')){alert('只有主持人可以正式開始遊戲。');return}if(confirm('這會清除所有測試紀錄、積分與牌堆，並從今天開始正式三日遊戲。確定開始嗎？')){state={players:state.players.map(p=>({...p,money:5000,score:0,chanceCards:[]})),devicePlayer:state.devicePlayer,turn:0,decks:{},history:[],game:{mode:'official',startedAt:new Date().toISOString(),diceCount:1},sharedCard:null,grouping:state.grouping,announcements:[],navigator:{station:'',toilet:'',luggage:'',transfer:'',meeting:'',returnTime:'',routeTarget:'',routeMinutes:'',routeNote:'',completed:0},medical:{checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0}};save();alert('正式三日遊戲已開始！之後關閉再打開，紀錄仍會保留。')}}
 function resetGame(){if(!hasRole('主持人')){alert('只有主持人可以清除遊戲資料。');return}if(confirm('確定清除目前所有資料並回到測試模式嗎？')){state={players:state.players.map(p=>({...p,money:5000,score:0,chanceCards:[]})),devicePlayer:state.devicePlayer,turn:0,decks:{},history:[],game:{mode:'test',startedAt:null,diceCount:1},sharedCard:null,grouping:state.grouping,announcements:[],navigator:{station:'',toilet:'',luggage:'',transfer:'',meeting:'',returnTime:'',routeTarget:'',routeMinutes:'',routeNote:'',completed:0},medical:{checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0}};save()}}
 render();
-showLanding();
 function randomRoomId(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('')}
-async function createRoom(){if(!auth.currentUser)return alert('仍在登入 Firebase，請稍候再試。');let code=randomRoomId();while((await db.collection('rooms').doc(code).get()).exists)code=randomRoomId();roomId=code;localStorage.setItem('railopolyRoomId',roomId);enterGame();connectRoom(true)}
-function joinRoom(){const code=(document.getElementById('joinRoomCode').value||'').trim().toUpperCase();if(!/^[A-Z2-9]{6}$/.test(code))return alert('請輸入正確的 6 碼房號。');roomId=code;localStorage.setItem('railopolyRoomId',roomId);closeJoinPanel();enterGame();connectRoom(false)}
-function leaveRoom(){if(!confirm('確定離開目前房間？'))return;if(roomUnsub)roomUnsub();roomUnsub=null;roomRef=null;roomId='';cloudReady=false;localStorage.removeItem('railopolyRoomId');showLanding();render()}
+async function createRoom(){if(!auth.currentUser)return alert('仍在登入 Firebase，請稍候再試。');let code=randomRoomId();while((await db.collection('rooms').doc(code).get()).exists)code=randomRoomId();roomId=code;localStorage.setItem('railopolyRoomId',roomId);roomGate.classList.add('hidden');connectRoom(true)}
+function joinRoom(){const code=(document.getElementById('joinRoomCode').value||'').trim().toUpperCase();if(!/^[A-Z2-9]{6}$/.test(code))return alert('請輸入正確的 6 碼房號。');roomId=code;localStorage.setItem('railopolyRoomId',roomId);roomGate.classList.add('hidden');connectRoom(false)}
+function leaveRoom(){if(!confirm('確定離開目前房間？'))return;if(roomUnsub)roomUnsub();roomUnsub=null;roomRef=null;roomId='';cloudReady=false;localStorage.removeItem('railopolyRoomId');roomGate.classList.remove('hidden');render()}
 async function connectRoom(createIfMissing){
  if(!roomId||!auth.currentUser)return;cloudReady=false;roomRef=db.collection('rooms').doc(roomId);if(roomUnsub)roomUnsub();
- const first=await roomRef.get();if(!first.exists&&!createIfMissing){alert('找不到這個房間。');localStorage.removeItem('railopolyRoomId');roomId='';showLanding();return}
+ const first=await roomRef.get();if(!first.exists&&!createIfMissing){alert('找不到這個房間。');localStorage.removeItem('railopolyRoomId');roomId='';roomGate.classList.remove('hidden');return}
  if(!first.exists){const cloudState=JSON.parse(JSON.stringify(state));delete cloudState.devicePlayer;await roomRef.set({state:cloudState,createdAt:firebase.firestore.FieldValue.serverTimestamp()})}
  roomUnsub=roomRef.onSnapshot(async snap=>{
   if(!snap.exists)return;
@@ -245,7 +208,7 @@ async function connectRoom(createIfMissing){
   }
  },err=>{console.error(err);alert('無法連接 Firestore，請確認規則已發布。')});
 }
-auth.onAuthStateChanged(async user=>{if(!user){try{await auth.signInAnonymously()}catch(err){console.error(err);alert('匿名登入失敗，請確認 Firebase Authentication 已啟用。')}return}showLanding();updateContinueButton()});
+auth.onAuthStateChanged(async user=>{if(!user){try{await auth.signInAnonymously()}catch(err){console.error(err);alert('匿名登入失敗，請確認 Firebase Authentication 已啟用。')}return}if(roomId){roomGate.classList.add('hidden');connectRoom(false)}else roomGate.classList.remove('hidden')});
 </script>
 
 <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error)); }</script>
