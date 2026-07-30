@@ -10,28 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Railopoly">
-<style>
-:root{--ink:#17323a;--muted:#668089;--paper:#fffdf7;--sea:#cfeff2;--rail:#0d5d70;--chance:#f6bd39;--fate:#3f7fc4;--task:#ef7b62;--good:#238b68;--bad:#c54f57;--shadow:0 12px 30px rgba(13,55,66,.14)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink);background:linear-gradient(160deg,#e9f8f7,#c9e8ec 48%,#f7efe0)}button,input{font:inherit}button{cursor:pointer}.app{max-width:720px;margin:auto;min-height:100vh;padding:env(safe-area-inset-top) 16px calc(84px + env(safe-area-inset-bottom))}.hero{padding:24px 4px 14px}.brand{display:flex;align-items:center;gap:12px}.logo{width:52px;height:52px;border-radius:17px;background:var(--rail);display:grid;place-items:center;color:white;font-size:28px;box-shadow:var(--shadow)}h1{font-size:25px;line-height:1.1;margin:0}.subtitle{color:var(--muted);margin:6px 0 0;font-size:14px}.panel{background:rgba(255,255,255,.87);border:1px solid rgba(255,255,255,.7);border-radius:24px;padding:16px;box-shadow:var(--shadow);backdrop-filter:blur(12px);margin-bottom:14px}.status{display:flex;justify-content:space-between;gap:12px;align-items:center}.turn-label{font-size:13px;color:var(--muted)}.turn-name{font-weight:800;font-size:21px}.mini{border:0;border-radius:12px;padding:9px 12px;background:#edf5f4;color:var(--rail);font-weight:700}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.big{border:0;border-radius:22px;padding:20px 12px;min-height:120px;color:#17323a;font-weight:900;font-size:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:.15s transform}.big:active{transform:scale(.97)}.big span{font-size:33px}.chance{background:linear-gradient(145deg,#ffd86d,var(--chance))}.fate{background:linear-gradient(145deg,#8fc2f6,var(--fate));color:#082943}.task{background:linear-gradient(145deg,#ffb39f,var(--task))}.dice{background:linear-gradient(145deg,#fff,#e7eeef)}.section-title{font-size:17px;margin:2px 0 13px}.players{display:grid;gap:10px}.player{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:#f7fbfa;border-radius:17px;padding:12px}.pname{font-weight:800}.stats{display:flex;gap:7px;margin-top:5px;font-size:13px;color:var(--muted)}.controls{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.pill{border:0;border-radius:11px;background:white;padding:7px 9px;box-shadow:0 3px 10px rgba(0,0,0,.06);font-size:13px}.pill.money{color:#8a6410}.pill.score{color:#b04a39}.rank{display:grid;gap:8px}.rank-row{display:flex;justify-content:space-between;padding:11px 12px;border-radius:14px;background:#f7fbfa}.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(720px,100%);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 14px calc(8px + env(safe-area-inset-bottom));background:rgba(249,252,251,.95);border-top:1px solid #d7e4e2;backdrop-filter:blur(12px);z-index:20}.nav{border:0;background:transparent;color:#6e858a;padding:7px;font-size:12px;font-weight:700}.nav.active{color:var(--rail)}.nav b{display:block;font-size:20px;margin-bottom:2px}.page{display:none}.page.active{display:block}.modal{position:fixed;inset:0;background:rgba(5,28,34,.64);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.show{display:flex}.card{width:min(430px,100%);min-height:440px;border-radius:29px;background:var(--paper);padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.28);display:flex;flex-direction:column;position:relative;overflow:hidden;animation:pop .3s ease}.card:before{content:"";position:absolute;inset:0 0 auto;height:12px;background:var(--accent)}@keyframes pop{from{transform:scale(.82) rotateY(30deg);opacity:0}to{transform:none;opacity:1}}.card-type{font-weight:900;color:var(--accent);letter-spacing:.12em;font-size:13px;margin-top:6px}.card-id{position:absolute;right:20px;top:24px;color:#99a7a8;font-size:12px}.card-icon{font-size:54px;margin:35px 0 10px}.card h2{font-size:27px;margin:0 0 12px}.card p{font-size:19px;line-height:1.55;white-space:pre-line;margin:0;color:#334e55}.card .note{font-size:13px;color:var(--muted);margin-top:auto;padding-top:20px}.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.action{border:0;border-radius:14px;padding:13px;font-weight:800}.close{background:#edf2f2;color:#52686d}.done{background:var(--accent);color:#132d33}.dice-result{text-align:center}.die{font-size:95px;line-height:1;margin:50px 0 20px;animation:shake .55s ease}@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-16deg) scale(.9)}45%{transform:rotate(14deg) scale(1.05)}70%{transform:rotate(-8deg)}}.branch{font-weight:900;color:#b55727;background:#fff0df;border-radius:15px;padding:12px;margin-top:15px}.history{display:grid;gap:8px}.history-item{font-size:14px;background:#f7fbfa;padding:11px;border-radius:13px}.empty{text-align:center;color:var(--muted);padding:22px}.settings label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}.settings input{width:100%;border:1px solid #cfdedd;border-radius:13px;padding:12px;background:white}.danger{background:#ffe9e9;color:#a13a42;border:0;border-radius:13px;padding:12px;font-weight:800;width:100%;margin-top:16px}.role-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:999px;background:#e7f2f1;color:var(--rail);font-size:12px;font-weight:800;margin-top:5px}.permission{padding:12px 14px;border-radius:16px;background:#edf6f5;color:#315c64;font-size:13px;line-height:1.5;margin-bottom:14px}.settings select{width:100%;border:1px solid #cfdedd;border-radius:13px;padding:12px;background:white}.admin-note{font-size:12px;color:var(--muted);margin-top:7px}.locked{opacity:.45;pointer-events:none}.role-grid{display:grid;gap:10px}.role-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:end}.role-desc{font-size:12px;color:var(--muted);line-height:1.45;margin-top:5px}.tool-grid{display:grid;gap:10px}.tool-card{background:#f7fbfa;border-radius:17px;padding:14px}.tool-card h4{margin:0 0 8px}.tool-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.primary{border:0;border-radius:13px;padding:11px 13px;background:var(--rail);color:white;font-weight:800}.secondary{border:0;border-radius:13px;padding:11px 13px;background:#e9f2f1;color:var(--rail);font-weight:800}.warn{border:0;border-radius:13px;padding:11px 13px;background:#fff0df;color:#9b531d;font-weight:800}.checklist{display:grid;gap:8px}.checkline{display:flex;gap:9px;align-items:flex-start;background:white;border-radius:12px;padding:10px}.group-chip{display:inline-flex;padding:4px 8px;border-radius:999px;background:#fff0df;color:#9b531d;font-size:12px;font-weight:800;margin-top:5px}.announcement{background:#fff8d9;border-left:5px solid var(--chance);padding:12px;border-radius:14px;margin-bottom:10px}.status-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.status-btn{border:0;border-radius:13px;padding:10px;background:white;font-size:13px}.status-btn.active{outline:3px solid #9bcac5}.small-input{width:100%;border:1px solid #cfdedd;border-radius:12px;padding:10px;background:white;margin-top:7px}.section-divider{height:1px;background:#dfeae8;margin:14px 0}@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}.big{min-height:145px}}
-
-.room-panel{background:#f7fbfa;border:1px solid #dbe8e6;border-radius:18px;padding:14px;margin-bottom:14px}.room-code{font-size:26px;font-weight:900;letter-spacing:.18em;color:var(--rail)}.room-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.dice-count{font-size:18px;font-weight:900}.inventory{display:grid;gap:8px}.inventory-card{background:#fff8d9;border-radius:14px;padding:11px}.overlay-lock.hidden{display:none}.join-card{width:min(430px,100%);background:white;border-radius:28px;padding:22px;box-shadow:var(--shadow)}.join-card input{width:100%;border:1px solid #cfdedd;border-radius:13px;padding:13px;text-transform:uppercase;letter-spacing:.15em;margin-top:10px}
-
-/* Railopoly v1.0.0 entrance */
-.overlay-lock{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-start;justify-content:center;padding:0;overflow-y:auto;overflow-x:hidden;background:#25add7}
-.app-entry{position:relative;width:min(100vw,520px);min-height:100svh;margin:auto;background:#25add7 url("./railopoly-home.png") center top/100% auto no-repeat;padding-bottom:160px}
-.app-entry-spacer{aspect-ratio:900/1792;width:100%}
-.entry-actions{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(30px + env(safe-area-inset-bottom));width:min(480px,calc(100% - 28px));display:grid;grid-template-columns:1fr 1fr;gap:10px;z-index:94}
-.entry-hotspot{border:2px solid rgba(91,48,13,.42);border-radius:18px;padding:15px 10px;color:#4b2d13;font-weight:900;font-size:18px;box-shadow:0 8px 18px rgba(0,0,0,.22);-webkit-tap-highlight-color:transparent}
-.entry-hotspot.create{background:linear-gradient(145deg,#ffd86d,#f6bd39)}
-.entry-hotspot.join{background:linear-gradient(145deg,#ffb39f,#ef7b62)}
-.entry-hotspot.rules{grid-column:1/-1;background:rgba(7,71,91,.94);color:white;border-color:rgba(255,255,255,.35);padding:11px}
-.entry-hotspot:active{transform:scale(.98)}
-.join-pop{position:fixed;inset:0;z-index:95;background:rgba(4,30,42,.72);display:none;align-items:center;justify-content:center;padding:20px}
-.join-pop.show{display:flex}.join-pop .join-card{position:relative}
-.join-close{position:absolute;right:14px;top:12px;border:0;background:#edf5f4;border-radius:999px;width:36px;height:36px;font-size:20px}
-.app-version{position:fixed;left:0;right:0;bottom:calc(7px + env(safe-area-inset-bottom));text-align:center;font-size:11px;color:rgba(0,50,70,.75);pointer-events:none;z-index:96}
-@media (min-width:600px){.app-entry{box-shadow:0 0 50px rgba(0,0,0,.25)}}
-</style>
+<link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <div class="app">
@@ -53,164 +32,23 @@
 </main>
 </div>
 <nav class="bottom"><button class="nav active" data-page="home" onclick="showPage('home',this)"><b>🏠</b>遊戲</button><button class="nav" data-page="players" onclick="showPage('players',this)"><b>👥</b>玩家</button><button class="nav" data-page="roles" onclick="showPage('roles',this)"><b>🧭</b>職務</button><button class="nav" data-page="settings" onclick="showPage('settings',this)"><b>⚙️</b>設定</button></nav>
-<div id="roomGate" class="overlay-lock"><div class="app-entry" aria-label="Railopoly 首頁"><div class="app-entry-spacer"></div><div class="entry-actions"><button class="entry-hotspot create" aria-label="建立房間" onclick="createRoom()">🎲 建立房間</button><button class="entry-hotspot join" aria-label="加入房間" onclick="openJoinPanel()">🎟️ 加入房間</button><button class="entry-hotspot rules" aria-label="遊戲規則" onclick="showGameRules()">📖 遊戲規則</button></div></div></div><div id="joinPop" class="join-pop"><div class="join-card"><button class="join-close" onclick="closeJoinPanel()" aria-label="關閉">×</button><div class="brand"><div class="logo">🚂</div><div><h1>加入房間</h1><p class="subtitle">輸入主持人提供的 6 碼房號</p></div></div><label style="display:block;margin-top:18px">房號</label><input id="joinRoomCode" maxlength="6" placeholder="例如 A8K3P2"><button class="primary" style="width:100%;margin-top:12px" onclick="joinRoom()">加入房間</button></div></div><div class="app-version">Version 1.0.0</div><div id="modal" class="modal" onclick="backdrop(event)"><div id="modalBody"></div></div>
+<div id="roomGate" class="overlay-lock"><div class="app-entry" aria-label="Railopoly 首頁"><div class="app-entry-spacer"></div><div class="entry-actions"><button class="entry-hotspot create" aria-label="建立房間" onclick="createRoom()">🎲 建立房間</button><button class="entry-hotspot join" aria-label="加入房間" onclick="openJoinPanel()">🎟️ 加入房間</button></div></div></div><div id="joinPop" class="join-pop"><div class="join-card"><button class="join-close" onclick="closeJoinPanel()" aria-label="關閉">×</button><div class="brand"><div class="logo">🚂</div><div><h1>加入房間</h1><p class="subtitle">輸入主持人提供的 6 碼房號</p></div></div><label style="display:block;margin-top:18px">房號</label><input id="joinRoomCode" maxlength="6" placeholder="例如 A8K3P2"><button class="primary" style="width:100%;margin-top:12px" onclick="joinRoom()">加入房間</button></div></div><div id="modal" class="modal" onclick="backdrop(event)"><div id="modalBody"></div></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script>
-function openJoinPanel(){document.getElementById('joinPop').classList.add('show');setTimeout(()=>document.getElementById('joinRoomCode')?.focus(),50)}
-function closeJoinPanel(){document.getElementById('joinPop').classList.remove('show')}
-function showGameRules(){
- modalBody.innerHTML=`<div class="card" style="--accent:var(--rail)"><div class="card-type">遊戲規則</div><div class="card-icon">🚂</div><h2>Railopoly</h2><p>• 全場共用骰子，初始為 1 顆。\n• 骰子總點數為 5 或 6 的倍數時，若位於支線入口，可依規則進入支線。\n• 機會卡可選擇立即使用或稍後保存。\n• 命運卡抽到後立即生效。\n• 房間內的卡片、骰子與遊戲資料會同步給所有玩家。</p><div class="card-actions" style="grid-template-columns:1fr"><button class="action close" onclick="closeModal()">關閉</button></div></div>`;modal.classList.add('show')
-}
-const firebaseConfig={apiKey:"AIzaSyCKXoFSvJUWQ8QDNNmQuJvAwSzYKZ5EELM",authDomain:"railopoly.firebaseapp.com",projectId:"railopoly",storageBucket:"railopoly.firebasestorage.app",messagingSenderId:"799199740741",appId:"1:799199740741:web:742802d2643c3a43c4742c",measurementId:"G-1W57QHQCZF"};
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(),db=firebase.firestore();
-let roomRef=null,roomUnsub=null,roomId=(localStorage.getItem("railopolyRoomId")||"").toUpperCase();
-let cloudReady=false,applyingCloud=false,lastSeenSharedCard="";
-const cards={
-chance:[
-["加開列車","使用後，全場共用骰子永久增加 1 顆；機會卡最多增加至 3 顆。","🎲","diceUp"],["準點之神","今天的列車完美準點。立即獲得 200 遊戲幣。","🚆"],["幸運靠窗座","下一次擲骰可以重骰一次，並選擇較好的結果。","🪟"],["在地人報路","向一位路人問一個附近推薦；完成後積分 +20。","🗣️"],["旅途小確幸","獲得 100 遊戲幣。","✨"],["免費通行券","下一次通過他人領地時免付一次過路費。","🎫"],["神級取景","立即拍一張最有旅行感的照片；完成後積分 +20。","📸"],["車站限定款","找到任何有車站名稱的物品並拍照；完成後獲得 100 遊戲幣。","🏷️"],["好心店家","店家熱情招待，獲得 200 遊戲幣。","🤝"],["最佳旅伴","指定一位玩家，你們各獲得 100 遊戲幣。","🫶"],["一路綠燈","下一次骰子點數 +1，最高仍為 6。","🚦"],["環島能量補給","全體一起喝一口水；抽卡者積分 +10。","💧"],["旅遊之神眷顧","再抽一張機會卡。","🌟"],["今日攝影師","替其他五位玩家拍一張合照；完成後積分 +20。","📷"],["名產試吃運","找到免費試吃或與朋友分享一口食物；獲得 100 遊戲幣。","🍡"],["完美轉乘","可以立刻再擲一次骰子。","🔁"],["旅途情報王","說出下一站的一項特色；說得出來獲得 100 遊戲幣。","🧠"],["意外中獎","獲得 300 遊戲幣。","🎉"],["交換好運","與任一玩家交換手上的 100 遊戲幣。若其中一方沒有則不執行。","🔄"],["支線邀請函","本次若經過支線入口，可直接選擇進入支線。","🌿"],["鐵道迷認證","拍到一張列車、月台或鐵軌照片；積分 +20。","🚉"],["省錢達人","下一次需要支付遊戲幣時減免 100。","🐷"],["車長特別照顧","選擇：獲得 200 遊戲幣，或積分 +20。","🧑‍✈️"],["旅行好天氣","所有人一起做晴天姿勢合照；抽卡者積分 +20。","☀️"],["神秘紅包","從其他五位玩家中擲骰決定一人，向他收取 100 遊戲幣。","🧧"]],
-fate:[
-["珍珠奶茶癮發作","忍不住買飲料，支付 100 遊戲幣。","🧋"],["手機快沒電","為行動電源付費，支付 100 遊戲幣。","🔋"],["買太多伴手禮","支付 200 遊戲幣。","🛍️"],["睡過頭驚魂","下一次骰子點數 -1，最低仍為 1。","😴"],["臨時換月台","下一位玩家先擲骰，你延後到他的下一位。","🏃"],["人潮爆滿","本次不得重骰。","👥"],["下雨啦","全體用最狼狽的表情自拍；完成後抽卡者免除損失，否則支付 100。","🌧️"],["錢包虛驚","支付 100 遊戲幣，慶祝失而復得。","👛"],["行李太重","支付 100 遊戲幣請人協助。","🧳"],["美食踩雷","支付 100 遊戲幣，但把踩雷表情拍下來可積分 +10。","😵"],["錯過轉乘","下一次不能使用任何重骰效果。","⌛"],["旅伴迷路","指定一位玩家，你們兩人各支付 100 遊戲幣。","🗺️"],["突然想上廁所","下一位玩家先進行；之後恢復原順序。","🚻"],["車廂太冷","全體擺出冷到發抖的姿勢；最後完成的人支付 100。","🥶"],["烈日曝曬","買防曬與飲料，支付 200 遊戲幣。","🥵"],["名店大排隊","選擇支付 100 遊戲幣離開，或原地等大家數 20 秒後積分 +10。","🍜"],["站名口誤","立刻清楚念出目前車站全名三次；失敗支付 100。","😬"],["計畫趕不上變化","與積分最高的玩家交換 100 遊戲幣。","🌪️"],["虛驚一場","以為坐過站，幸好沒有。什麼事都沒發生。","😮‍💨"],["車掌廣播","模仿一次列車進站廣播。全體認可則積分 +10，否則支付 100。","📢"],["忘記帶東西","支付 100 遊戲幣購買替代品。","🤦"],["照片糊掉","立即重拍一張全體照；完成後無事，拒絕則支付 100。","🫨"],["雨傘開花","支付 200 遊戲幣更換雨具。","☂️"],["意外好運","命運突然轉彎：獲得 200 遊戲幣。","🍀"]],
-task:[
-["在地舌尖","找出並吃掉一種該縣市或該站限定的傳統小吃、名產。","🍜"],["方言大挑戰","找一位當地居民，教你們一句當地台語或客家話俗語並錄影。","🗣️"],["古時記憶｜特別任務","尋找古蹟、老街或地標，拍一張復古風格照。","🏛️"],["冷知識獵人","向站務員或路人詢問一個當地地名的隱藏歷史或小故事，再傳話到最後一位玩家。","🕵️"],["人情味大考驗","請一位素不相識的路人拿著你們的道具合照。","🤝"],["特產尋寶｜特別任務","用最多新台幣 50 元，買到最有當地特色且最神奇的小禮物。","🎁"],["在地人推薦","全程不能查手機，只能靠問路人，去吃路人推薦的在地美食。","🥢"],["絕景視角","拍出最具文青或底片感的車站月台、鐵道照片。","🎞️"],["熱情互助","幫一位路人完成一件小善事；以不打擾或造成壓力為原則。","💛"],["靈魂畫手｜特別任務","畫出該站代表性地標，並讓三個人猜對；不便詢問路人時可由另一組猜。","🎨"],["極速購物｜特別任務","在限定時間內，買到指定顏色的三種東西。","🛒"],["街頭好聲音","在車站外合適處，六人一起唱一句車站或火車相關歌曲。","🎤"],["地名創意聯想","用該車站地名造一個諧音梗，錄一段搞笑短影音。","🤣"],["綠意尋蹤","找到附近看起來年紀最大的樹，保持愛護距離合照。","🌳"],["老字號尋寶｜特別任務","找到一家自稱或有資料顯示開業超過 30 年的店，進行小額消費。","🏪"],["體能大挑戰","一起在車站外安全空曠處跳躍，拍出全員同時懸空照片。","🤸"],["地方特搜","找到車站內或門口標示的里程數或設站年份並拍照。","🔎"],["神秘交換｜特別任務","用一個隨身小物品，經對方同意後與人進行一次等值交換。","🔄"],["極限影子畫","用陽光與影子，在地面排出火車或車站的形狀並拍照。","🌤️"],["運氣大考驗｜特別任務","買一顆茶葉蛋，若剝開完整漂亮即可過關。","🥚"],["尋找歷史烙印","找到標有民國或西元年份，且比所有成員年紀大的建築或物件。","📅"],["千禧年姿勢","全組用 2000 年代流行姿勢在車站門口拍照。","✌️"],["神速排隊學｜特別任務","找到附近需要排隊的店或攤位，買到一樣東西並拍照；排隊超過 10 分鐘可換店。","⏱️"],["色彩尋寶獵人｜特別任務","在車站周邊拍到紅、黃、藍、綠、紫五種顏色的物品。","🌈"],["尋找同名字號｜特別任務","找到路標、店名或告示牌，包含任一隊員名字中的一個字。","🔤"],["鐵道詩人","一人一句，共同創作四句關於這座車站的短詩並朗誦。","📝"],["人體時鐘｜特別任務","不能看手機或手錶，憑感覺倒數 60 秒，誤差在 3 秒內。","⏰"],["在地視角尋寶｜特別任務","拍下水溝蓋、變電箱、招牌上印有當地名稱或圖騰的內容；三種都需完成。","🧭"],["極致節儉戰","用不超過新台幣 20 元買到可食用的東西，由全員分享。","🪙"],["時空模仿秀｜特別任務","找到當地舊海報或宣傳文宣，全組模仿其動作與表情拍照。","🎭"],["路人真心話","禮貌詢問路人：你覺得我們這組誰看起來最像什麼角色？並錄下答案。","🎙️"],["鐵道大舞廳","在車站外合適空曠處，六人做一段 15 秒無聲舞蹈或默劇，不能笑場。","💃"]]
-};
-const roles=[
-{name:'主持人',icon:'🎤',desc:'領導玩家行動、擔任裁判，並控制遊戲開始與重設。'},
-{name:'總務',icon:'💼',desc:'管理共同旅費；網站中可調整所有玩家的遊戲幣。'},
-{name:'雜務',icon:'🧰',desc:'管理遊戲道具、記錄到站與任務；網站中可調整所有玩家積分。'},
-{name:'攝影',icon:'📸',desc:'負責拍照、攝影、限時動態與旅程短影音。'},
-{name:'導航員',icon:'🧭',desc:'查詢車站資源、任務方向與路線，必要時向路人問路。'},
-{name:'後勤醫療',icon:'🩹',desc:'機動支援、攜帶急救用品，提醒補水、休息與行李安全。'}];
-const initialPlayers=Array.from({length:6},(_,i)=>({name:`玩家 ${i+1}`,money:5000,score:0,role:roles[i].name}));
-const defaultState={players:initialPlayers.map(p=>({...p,chanceCards:[]})),turn:0,decks:{},history:[],game:{mode:'test',startedAt:null,diceCount:1},sharedCard:null,grouping:{active:false,groups:[{name:'主線組',members:[0,1,2,3,4,5]},{name:'支線組',members:[]}]},announcements:[],navigator:{station:'',toilet:'',luggage:'',transfer:'',meeting:'',returnTime:'',routeTarget:'',routeMinutes:'',routeNote:'',completed:0},medical:{checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0}};
-let state=JSON.parse(localStorage.getItem('railopolyState')||'null')||structuredClone(defaultState);
-state.devicePlayer=Number(localStorage.getItem('railopolyDevicePlayer')||state.devicePlayer||0);
-if(!state.game)state.game={mode:'test',startedAt:null,diceCount:1};if(!state.game.diceCount)state.game.diceCount=1;if(!('sharedCard' in state))state.sharedCard=null;
-if(!state.grouping)state.grouping=structuredClone(defaultState.grouping);
-if(!state.announcements)state.announcements=[];
-if(!state.navigator)state.navigator={station:'',toilet:'',luggage:'',transfer:'',meeting:'',returnTime:'',routeTarget:'',routeMinutes:'',routeNote:'',completed:0};
-if(!state.medical)state.medical={checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0};
-if(state.devicePlayer===undefined)state.devicePlayer=0;
-state.players=state.players.map((p,i)=>({...p,role:p.role||roles[i].name,chanceCards:Array.isArray(p.chanceCards)?p.chanceCards:[]}));
-function currentUser(){return state.players[state.devicePlayer]||state.players[0]}
-function hasRole(name){return currentUser().role===name}
-function playerGroupIndex(i){return state.grouping.groups.findIndex(g=>g.members.includes(i))}
-function canPlay(){return state.turn===state.devicePlayer||hasRole('主持人')}
-async function save(){
- localStorage.setItem('railopolyDevicePlayer',String(state.devicePlayer));localStorage.setItem('railopolyState',JSON.stringify(state));render();
- if(!cloudReady||applyingCloud||!roomRef)return;
- const cloudState=JSON.parse(JSON.stringify(state));delete cloudState.devicePlayer;
- try{await roomRef.set({state:cloudState,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch(err){console.error(err);alert('雲端同步失敗，請確認網路或 Firestore 規則。')}
-}
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function ensureDeck(type){if(!state.decks[type]||!state.decks[type].length)state.decks[type]=shuffle(cards[type].map((_,i)=>i))}
-function logEntry(kind,title){const now=new Date();let day=1;if(state.game.mode==='official'&&state.game.startedAt){const start=new Date(state.game.startedAt);day=Math.max(1,Math.floor((now-start)/86400000)+1)}state.history.unshift({timestamp:now.toISOString(),date:now.toLocaleDateString('zh-TW'),time:now.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}),day,kind,title,player:state.players[state.turn].name});state.history=state.history.slice(0,500)}
-function newEventId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
-function draw(type){
- if(!canPlay()){alert('目前不是你的回合；只有本輪玩家或主持人可以操作。');return}
- ensureDeck(type);const idx=state.decks[type].pop(),c=cards[type][idx];
- const event={id:newEventId(),type,cardIndex:idx,title:c[0],text:c[1],icon:c[2],effect:c[3]||null,drawerIndex:state.turn,drawerName:state.players[state.turn].name,status:type==='chance'?'pending':'used',createdAt:new Date().toISOString()};
- state.sharedCard=event;lastSeenSharedCard=event.id;localStorage.setItem('railopolySeenCard_'+roomId,event.id);
- logEntry(type,c[0]);
- if(type==='chance'){state.players[state.turn].chanceCards.push({...event,status:'held'});save();showChanceDecision(event)}
- else{if(type==='fate')applyFateEffect(event);save();showSharedCard(event,false)}
-}
-function applyFateEffect(event){
- const p=state.players[event.drawerIndex];const exact={"珍珠奶茶癮發作":-100,"手機快沒電":-100,"買太多伴手禮":-200,"錢包虛驚":-100,"行李太重":-100,"烈日曝曬":-200,"忘記帶東西":-100,"雨傘開花":-200,"意外好運":200};
- if(exact[event.title])p.money=Math.max(0,p.money+exact[event.title]);
-}
-function showChanceDecision(event){
- const isDrawer=event.drawerIndex===state.devicePlayer;showSharedCard(event,isDrawer)
-}
-function showSharedCard(event,decision){
- const names={chance:'機會卡',fate:'命運卡',task:'任務卡'},colors={chance:'var(--chance)',fate:'var(--fate)',task:'var(--task)'};
- const actions=decision?`<div class="card-actions"><button class="action close" onclick="holdChanceCard('${event.id}')">稍後使用</button><button class="action done" onclick="useChanceCard('${event.id}')">現在使用</button></div>`:`<div class="card-actions" style="grid-template-columns:1fr"><button class="action close" onclick="closeModal()">知道了</button></div>`;
- modalBody.innerHTML=`<div class="card" style="--accent:${colors[event.type]}"><div class="card-type">${names[event.type]}｜${event.drawerName}</div><div class="card-icon">${event.icon}</div><h2>${event.title}</h2><p>${event.text}</p><div class="note">${event.type==='fate'?'命運卡已立即生效。':event.type==='chance'?'所有玩家都會看到此卡；只有抽卡者可決定使用時間。':'全房間同步顯示。'}</div>${actions}</div>`;modal.classList.add('show')
-}
-function holdChanceCard(id){const card=state.players[state.devicePlayer].chanceCards.find(x=>x.id===id);if(card)card.status='held';if(state.sharedCard?.id===id)state.sharedCard.status='held';save();closeModal()}
-function useChanceCard(id){
- const card=state.players[state.devicePlayer].chanceCards.find(x=>x.id===id);if(!card)return alert('找不到這張機會卡。');
- if(card.effect==='diceUp'){const before=state.game.diceCount;state.game.diceCount=Math.min(3,before+1);logEntry('chance',`使用「${card.title}」：全場骰子 ${before} → ${state.game.diceCount} 顆`)}else logEntry('chance',`使用「${card.title}」`);
- card.status='used';if(state.sharedCard?.id===id)state.sharedCard.status='used';save();closeModal()
-}
-function showCard(type,c,id){const names={chance:'機會卡',fate:'命運卡',task:'任務卡'},colors={chance:'var(--chance)',fate:'var(--fate)',task:'var(--task)'};modalBody.innerHTML=`<div class="card" style="--accent:${colors[type]}"><div class="card-type">${names[type]}</div><div class="card-id">#${String(id).padStart(3,'0')}</div><div class="card-icon">${c[2]}</div><h2>${c[0]}</h2><p>${c[1]}</p><div class="note">由本輪擲骰玩家立即執行；需要存證的任務請拍照或錄影。</div><div class="card-actions"><button class="action close" onclick="closeModal()">關閉</button><button class="action done" onclick="closeModal();nextTurn()">完成並換人</button></div></div>`;modal.classList.add('show')}
-function rollDice(){if(!canPlay()){alert('目前不是你的回合；只有本輪玩家或主持人可以操作。');return}const count=Math.max(1,Math.min(5,state.game.diceCount||1)),rolls=Array.from({length:count},()=>1+Math.floor(Math.random()*6)),faces=['⚀','⚁','⚂','⚃','⚄','⚅'],total=rolls.reduce((a,b)=>a+b,0);logEntry('dice',`擲出 ${rolls.join('、')}，總點數 ${total}`);save();modalBody.innerHTML=`<div class="card dice-result" style="--accent:var(--rail)"><div class="card-type">${count} 顆骰子結果</div><div class="die" style="font-size:${count>3?'52px':'70px'}">${rolls.map(n=>faces[n-1]).join(' ')}</div><h2>總點數 ${total}</h2>${(total%5===0||total%6===0)?'<div class="branch">🌿 骰子總點數符合支線條件；若正好位於支線入口，可依規則進入支線。</div>':''}<div class="card-actions"><button class="action close" onclick="closeModal()">關閉</button><button class="action done" onclick="closeModal();nextTurn()">完成並換人</button></div></div>`;modal.classList.add('show')}
-function adjustDice(delta){if(!hasRole('雜務')&&!hasRole('主持人'))return alert('只有雜務或主持人可以調整骰子數量。');const before=state.game.diceCount||1;state.game.diceCount=Math.max(1,Math.min(5,before+delta));if(before!==state.game.diceCount)logEntry('dice',`後台調整全場骰子：${before} → ${state.game.diceCount} 顆`);save()}
-function nextTurn(){if(!hasRole('主持人')&&state.turn!==state.devicePlayer){alert('只有本輪玩家或主持人可以換下一位。');return}state.turn=(state.turn+1)%state.players.length;save()}
-function change(i,key,delta){
- if(key==='money'&&!hasRole('總務')){alert('只有總務可以調整遊戲幣。');return}
- if(key==='score'&&!hasRole('雜務')){alert('只有雜務可以調整積分。');return}
- state.players[i][key]=Math.max(0,state.players[i][key]+delta);save()
-}
-function setDevicePlayer(v){state.devicePlayer=Number(v);localStorage.setItem('railopolyDevicePlayer',String(state.devicePlayer));render()}
-function postAnnouncement(){if(!hasRole('主持人'))return alert('只有主持人可以發布公告。');const el=document.getElementById('announcementInput');const text=(el?.value||'').trim();if(!text)return alert('請先輸入公告內容。');state.announcements.unshift({text,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});state.announcements=state.announcements.slice(0,20);logEntry('announcement',text);save()}
-function toggleGrouping(active){if(!hasRole('主持人'))return alert('只有主持人可以管理分組。');const msg=active?'是否開始分組？分組後各組可獨立行動。':'是否結束分組並匯合？所有玩家將回到同一遊戲流程。';if(confirm(msg)){state.grouping.active=active;if(!active){state.grouping.groups[0].members=state.players.map((_,i)=>i);state.grouping.groups[1].members=[]}logEntry('group',active?'開始分組模式':'結束分組並匯合');save()}}
-function movePlayerGroup(i,g){if(!hasRole('主持人'))return alert('只有主持人可以調整分組。');state.grouping.groups.forEach(x=>x.members=x.members.filter(n=>n!==i));state.grouping.groups[g].members.push(i);save()}
-function updateNavigator(key,val){if(!hasRole('導航員'))return alert('只有導航員可以操作此功能。');state.navigator[key]=val;save()}
-function publishStationInfo(){if(!hasRole('導航員'))return alert('只有導航員可以發布到站情報。');state.navigator.completed++;logEntry('navigator',`更新 ${state.navigator.station||'目前車站'} 到站情報`);save();alert('到站情報已發布。')}
-function publishRoute(){if(!hasRole('導航員'))return alert('只有導航員可以發布任務路線。');logEntry('navigator',`發布任務路線：${state.navigator.routeTarget||'未命名目的地'}`);save();alert('任務路線已發布。')}
-function toggleMedicalCheck(key,checked){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以操作此功能。');state.medical.checks[key]=checked;save()}
-function completeMedicalCheck(){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以完成檢查。');const done=Object.values(state.medical.checks).filter(Boolean).length;if(done<6)return alert('請完成全部六項檢查。');state.medical.completed++;logEntry('medical','完成全組出發前安全檢查');save();alert('後勤安全檢查完成。')}
-function setOwnStatus(status){state.medical.statuses[state.devicePlayer]=status;logEntry('status',`回報狀態：${status}`);save()}
-function sendReminder(text){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以發送提醒。');state.medical.reminders.unshift({text,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});state.medical.reminders=state.medical.reminders.slice(0,20);logEntry('medical',text);save()}
-function setRole(i,v){
- const other=state.players.findIndex((p,idx)=>idx!==i&&p.role===v);
- if(other>=0){const old=state.players[i].role;state.players[other].role=old}
- state.players[i].role=v;save()
-}
-function rename(i,v){state.players[i].name=v.trim()||`玩家 ${i+1}`;save()}
-function render(){
- const user=currentUser(), role=roles.find(r=>r.name===user.role)||roles[0];
- turnName.textContent=state.players[state.turn].name;
- gameMode.textContent=state.game.mode==='official'?`正式遊戲｜第 ${Math.max(1,Math.floor((new Date()-new Date(state.game.startedAt))/86400000)+1)} 天`:'測試模式｜測試完成後請按「正式開始三日遊戲」';
- sharedDiceCount.textContent=`🎲 ${state.game.diceCount||1} 顆`;diceAdmin.innerHTML=(hasRole('雜務')||hasRole('主持人'))?`<div class="tool-actions"><button class="secondary" onclick="adjustDice(-1)">−</button><button class="secondary" onclick="adjustDice(1)">＋</button></div>`:'';
- const held=(user.chanceCards||[]).filter(c=>c.status==='held');chanceInventory.innerHTML=held.length?held.map(c=>`<div class="inventory-card"><b>${c.icon} ${c.title}</b><div class="subtitle">${c.text}</div><button class="primary" style="width:100%;margin-top:8px" onclick="useChanceCard('${c.id}')">使用</button></div>`).join(''):'<div class="empty">目前沒有未使用的機會卡</div>';
- roomInfo.innerHTML=roomId?`目前房號：<div class="room-code">${roomId}</div><div class="subtitle">分享這 6 碼給其他玩家加入。</div>`:'尚未加入房間';
- const gi=playerGroupIndex(state.devicePlayer);const groupText=state.grouping.active&&gi>=0?`<div class="group-chip">${state.grouping.groups[gi].name}</div>`:'';permissionBanner.innerHTML=`<b>${role.icon} ${user.name}｜${user.role}</b><br>${role.desc}${groupText}<div class="group-chip">${cloudReady?'☁️ 雲端已連線':'⏳ 連線中'}</div>`;
- playerList.innerHTML=state.players.map((p,i)=>`<div class="player"><div><div class="pname">${i===state.turn?'🚩 ':''}${p.name}</div><div class="role-badge">${(roles.find(r=>r.name===p.role)||{}).icon||'👤'} ${p.role}</div>${state.grouping.active?`<div class="group-chip">${state.grouping.groups[playerGroupIndex(i)]?.name||'未分組'}</div>`:''}<div class="stats"><span>💰 ${p.money}</span><span>⭐ ${p.score}</span></div></div><div class="controls"><button class="pill money ${hasRole('總務')?'':'locked'}" onclick="change(${i},'money',-100)">幣 −100</button><button class="pill money ${hasRole('總務')?'':'locked'}" onclick="change(${i},'money',100)">幣 +100</button><button class="pill score ${hasRole('雜務')?'':'locked'}" onclick="change(${i},'score',-20)">分 −20</button><button class="pill score ${hasRole('雜務')?'':'locked'}" onclick="change(${i},'score',20)">分 +20</button></div></div>`).join('');
- const sorted=[...state.players].sort((a,b)=>b.score-a.score||b.money-a.money);
- ranking.innerHTML=sorted.map((p,i)=>`<div class="rank-row"><span>${['🥇','🥈','🥉','4.','5.','6.'][i]} ${p.name}・${p.role}</span><b>⭐ ${p.score}</b></div>`).join('');
- recent.innerHTML=state.history.length?state.history.slice(0,12).map(h=>`<div class="history-item"><b>${h.player}</b>｜${h.title}<div style="font-size:12px;color:#8da0a3;margin-top:3px">${state.game.mode==='official'?'第 '+(h.day||1)+' 天｜':''}${h.date||''} ${h.time||''}</div></div>`).join(''):'<div class="empty">還沒有紀錄，開始抽卡吧！</div>';
- nameInputs.innerHTML=state.players.map((p,i)=>`<label>玩家 ${i+1}</label><input value="${p.name.replace(/"/g,'&quot;')}" onchange="rename(${i},this.value)">`).join('');
- devicePlayer.innerHTML=state.players.map((p,i)=>`<option value="${i}" ${i===state.devicePlayer?'selected':''}>${p.name}｜${p.role}</option>`).join('');
- roleInputs.innerHTML=state.players.map((p,i)=>`<div class="role-row"><div><label>${p.name} 的職位</label><select onchange="setRole(${i},this.value)">${roles.map(r=>`<option value="${r.name}" ${p.role===r.name?'selected':''}>${r.icon} ${r.name}</option>`).join('')}</select><div class="role-desc">${(roles.find(r=>r.name===p.role)||roles[0]).desc}</div></div></div>`).join('');
- const latestAnnouncements=state.announcements.slice(0,3).map(a=>`<div class="announcement"><b>📢 ${a.time}</b><br>${a.text}</div>`).join('');
- const statusOptions=['🟢 正常','🟡 需要休息','🔵 需要補水','🟠 需要廁所','🔴 身體不舒服'];
- let tools=`<div class="panel"><h3 class="section-title">我的職務工具</h3><div class="permission"><b>${role.icon} ${user.role}</b><br>${role.desc}</div>`;
- if(hasRole('導航員'))tools+=`<div class="tool-grid"><div class="tool-card"><h4>🧭 到站情報卡</h4><input class="small-input" placeholder="目前車站" value="${state.navigator.station}" oninput="updateNavigator('station',this.value)"><input class="small-input" placeholder="洗手間位置" value="${state.navigator.toilet}" oninput="updateNavigator('toilet',this.value)"><input class="small-input" placeholder="行李寄放位置" value="${state.navigator.luggage}" oninput="updateNavigator('luggage',this.value)"><input class="small-input" placeholder="轉乘位置" value="${state.navigator.transfer}" oninput="updateNavigator('transfer',this.value)"><input class="small-input" placeholder="集合地點" value="${state.navigator.meeting}" oninput="updateNavigator('meeting',this.value)"><input class="small-input" placeholder="最晚回站時間" value="${state.navigator.returnTime}" oninput="updateNavigator('returnTime',this.value)"><div class="tool-actions"><button class="primary" onclick="publishStationInfo()">發布到站情報</button></div></div><div class="tool-card"><h4>📍 任務路線</h4><input class="small-input" placeholder="目的地" value="${state.navigator.routeTarget}" oninput="updateNavigator('routeTarget',this.value)"><input class="small-input" placeholder="預估步行分鐘" value="${state.navigator.routeMinutes}" oninput="updateNavigator('routeMinutes',this.value)"><input class="small-input" placeholder="注意事項" value="${state.navigator.routeNote}" oninput="updateNavigator('routeNote',this.value)"><div class="tool-actions"><button class="primary" onclick="publishRoute()">發布任務路線</button></div></div></div>`;
- else if(hasRole('後勤醫療')){const labels={water:'全員已補水',toilet:'已確認廁所需求',luggage:'行李已帶齊',kit:'急救包在身上',sun:'已提醒防曬／防蚊',well:'無人身體不適'};tools+=`<div class="tool-card"><h4>🩹 出發前安全檢查</h4><div class="checklist">${Object.entries(labels).map(([k,v])=>`<label class="checkline"><input type="checkbox" ${state.medical.checks[k]?'checked':''} onchange="toggleMedicalCheck('${k}',this.checked)"><span>${v}</span></label>`).join('')}</div><div class="tool-actions"><button class="primary" onclick="completeMedicalCheck()">完成檢查</button></div></div><div class="tool-card"><h4>💧 全組提醒</h4><div class="tool-actions"><button class="secondary" onclick="sendReminder('請全組補水')">補水</button><button class="secondary" onclick="sendReminder('請原地休息 10 分鐘')">休息</button><button class="secondary" onclick="sendReminder('請確認隨身行李')">行李</button><button class="secondary" onclick="sendReminder('請補防曬或防蚊')">防曬／防蚊</button></div></div>`}
- else tools+=`<div class="tool-card">此職位目前沒有專屬操作面板；仍可使用下方的個人狀態回報。</div>`;
- tools+=`<div class="panel" style="box-shadow:none;margin-top:14px"><h4>我的旅行狀態</h4><div class="status-grid">${statusOptions.map(x=>`<button class="status-btn ${state.medical.statuses[state.devicePlayer]===x?'active':''}" onclick="setOwnStatus('${x}')">${x}</button>`).join('')}</div></div></div>`;
- roleTools.innerHTML=tools;
- hostManagement.innerHTML=hasRole('主持人')?`<label>即時公告</label><input id="announcementInput" placeholder="例如：18:30 花蓮站集合"><button class="primary" style="width:100%;margin-top:8px" onclick="postAnnouncement()">發布公告</button><div class="section-divider"></div><h4>分組管理</h4><p class="subtitle">目前：${state.grouping.active?'分組模式':'匯合模式'}</p>${state.players.map((p,i)=>`<label>${p.name}</label><select onchange="movePlayerGroup(${i},Number(this.value))">${state.grouping.groups.map((g,idx)=>`<option value="${idx}" ${g.members.includes(i)?'selected':''}>${g.name}</option>`).join('')}</select>`).join('')}<div class="tool-actions"><button class="primary" onclick="toggleGrouping(true)">開始分組</button><button class="warn" onclick="toggleGrouping(false)">結束分組（匯合）</button></div><div class="section-divider"></div><h4>最新公告</h4>${latestAnnouncements||'<div class="empty">尚無公告</div>'}`:`<div class="empty">只有主持人可以管理公告與分組。</div>`;
- startBtn.classList.toggle('locked',!hasRole('主持人'));resetBtn.classList.toggle('locked',!hasRole('主持人'));
-}
-function showPage(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));btn.classList.add('active');render()}
-function closeModal(){modal.classList.remove('show')}
-function backdrop(e){if(e.target===modal)closeModal()}
-function startOfficialGame(){if(!hasRole('主持人')){alert('只有主持人可以正式開始遊戲。');return}if(confirm('這會清除所有測試紀錄、積分與牌堆，並從今天開始正式三日遊戲。確定開始嗎？')){state={players:state.players.map(p=>({...p,money:5000,score:0,chanceCards:[]})),devicePlayer:state.devicePlayer,turn:0,decks:{},history:[],game:{mode:'official',startedAt:new Date().toISOString(),diceCount:1},sharedCard:null,grouping:state.grouping,announcements:[],navigator:{station:'',toilet:'',luggage:'',transfer:'',meeting:'',returnTime:'',routeTarget:'',routeMinutes:'',routeNote:'',completed:0},medical:{checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0}};save();alert('正式三日遊戲已開始！之後關閉再打開，紀錄仍會保留。')}}
-function resetGame(){if(!hasRole('主持人')){alert('只有主持人可以清除遊戲資料。');return}if(confirm('確定清除目前所有資料並回到測試模式嗎？')){state={players:state.players.map(p=>({...p,money:5000,score:0,chanceCards:[]})),devicePlayer:state.devicePlayer,turn:0,decks:{},history:[],game:{mode:'test',startedAt:null,diceCount:1},sharedCard:null,grouping:state.grouping,announcements:[],navigator:{station:'',toilet:'',luggage:'',transfer:'',meeting:'',returnTime:'',routeTarget:'',routeMinutes:'',routeNote:'',completed:0},medical:{checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0}};save()}}
-render();
-function randomRoomId(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('')}
-async function createRoom(){if(!auth.currentUser)return alert('仍在登入 Firebase，請稍候再試。');let code=randomRoomId();while((await db.collection('rooms').doc(code).get()).exists)code=randomRoomId();roomId=code;localStorage.setItem('railopolyRoomId',roomId);roomGate.classList.add('hidden');connectRoom(true)}
-function joinRoom(){const code=(document.getElementById('joinRoomCode').value||'').trim().toUpperCase();if(!/^[A-Z2-9]{6}$/.test(code))return alert('請輸入正確的 6 碼房號。');roomId=code;localStorage.setItem('railopolyRoomId',roomId);roomGate.classList.add('hidden');connectRoom(false)}
-function leaveRoom(){if(!confirm('確定離開目前房間？'))return;if(roomUnsub)roomUnsub();roomUnsub=null;roomRef=null;roomId='';cloudReady=false;localStorage.removeItem('railopolyRoomId');roomGate.classList.remove('hidden');render()}
-async function connectRoom(createIfMissing){
- if(!roomId||!auth.currentUser)return;cloudReady=false;roomRef=db.collection('rooms').doc(roomId);if(roomUnsub)roomUnsub();
- const first=await roomRef.get();if(!first.exists&&!createIfMissing){alert('找不到這個房間。');localStorage.removeItem('railopolyRoomId');roomId='';roomGate.classList.remove('hidden');return}
- if(!first.exists){const cloudState=JSON.parse(JSON.stringify(state));delete cloudState.devicePlayer;await roomRef.set({state:cloudState,createdAt:firebase.firestore.FieldValue.serverTimestamp()})}
- roomUnsub=roomRef.onSnapshot(async snap=>{
-  if(!snap.exists)return;
-  const data=snap.data();if(data&&data.state){applyingCloud=true;const devicePlayer=Number(localStorage.getItem('railopolyDevicePlayer')||0);state={...structuredClone(defaultState),...data.state,devicePlayer};state.players=state.players.map((p,i)=>({...p,role:p.role||roles[i].name,chanceCards:Array.isArray(p.chanceCards)?p.chanceCards:[]}));if(!state.game.diceCount)state.game.diceCount=1;if(!state.grouping)state.grouping=structuredClone(defaultState.grouping);localStorage.setItem('railopolyState',JSON.stringify(state));applyingCloud=false;cloudReady=true;render();
-   const e=state.sharedCard,seen=localStorage.getItem('railopolySeenCard_'+roomId)||'';if(e&&e.id!==seen){localStorage.setItem('railopolySeenCard_'+roomId,e.id);lastSeenSharedCard=e.id;showSharedCard(e,e.type==='chance'&&e.drawerIndex===state.devicePlayer&&e.status==='pending')}
-  }
- },err=>{console.error(err);alert('無法連接 Firestore，請確認規則已發布。')});
-}
-auth.onAuthStateChanged(async user=>{if(!user){try{await auth.signInAnonymously()}catch(err){console.error(err);alert('匿名登入失敗，請確認 Firebase Authentication 已啟用。')}return}if(roomId){roomGate.classList.add('hidden');connectRoom(false)}else roomGate.classList.remove('hidden')});
-</script>
+<script src="./app.js"></script>
 
-<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error)); }</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register('./service-worker.js');
+      registration.update();
+    } catch (error) {
+      console.error('Service Worker 註冊失敗：', error);
+    }
+  });
+}
+</script>
 </body>
 </html>
