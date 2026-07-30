@@ -1,0 +1,23 @@
+{
+  "name": "Railopoly",
+  "short_name": "Railopoly",
+  "description": "台灣鐵路環島大富翁",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#8FD3E8",
+  "theme_color": "#2E7D6A",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
