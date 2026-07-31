@@ -1,7 +1,9 @@
 {
+  "id": "./",
   "name": "Railopoly",
   "short_name": "Railopoly",
   "description": "台灣鐵路環島大富翁",
+  "lang": "zh-Hant",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
