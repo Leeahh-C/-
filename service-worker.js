@@ -11,7 +11,7 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
-const CACHE_NAME = 'railopoly-v1.0.13';
+const CACHE_NAME = 'railopoly-v1.0.14';
 const APP_SHELL = [
   './',
   './index.html',
