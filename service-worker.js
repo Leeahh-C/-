@@ -34,7 +34,6 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
@@ -52,16 +51,10 @@ self.addEventListener('fetch', (event) => {
       .catch(async () => {
         const cached = await caches.match(request);
         if (cached) return cached;
-
-        if (request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-
+        if (request.mode === 'navigate') return caches.match('./index.html');
         return new Response('目前沒有網路連線', {
           status: 503,
-          headers: {
-            'Content-Type': 'text/plain; charset=utf-8'
-          }
+          headers: {'Content-Type': 'text/plain; charset=utf-8'}
         });
       })
   );
@@ -72,7 +65,7 @@ self.addEventListener('push', (event) => {
 
   try {
     payload = event.data ? event.data.json() : {};
-  } catch {
+  } catch (error) {
     payload = {
       notification: {
         body: event.data ? event.data.text() : ''
@@ -82,30 +75,42 @@ self.addEventListener('push', (event) => {
 
   const notification = payload.notification || {};
   const data = payload.data || {};
+  const title = notification.title || data.title || 'Railopoly 通知';
 
-  event.waitUntil(
-    self.registration.showNotification(
-      notification.title || data.title || 'Railopoly',
-      {
-        body: notification.body || data.body || '你有一則通知',
-        icon: './icon-192.png',
-        badge: './icon-192.png',
-        tag: data.tag || 'railopoly',
-        renotify: true,
-        data: {
-          url: data.url || './'
-        }
-      }
-    )
-  );
+  const options = {
+    body: notification.body || data.body || '你有一則新訊息',
+    icon: notification.icon || data.icon || './icon-192.png',
+    badge: data.badge || './icon-192.png',
+    tag: data.tag || 'railopoly-message',
+    renotify: true,
+    data: {
+      url:
+        data.url ||
+        payload.fcmOptions?.link ||
+        payload.webpush?.fcmOptions?.link ||
+        './'
+    }
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
+  const targetUrl = new URL(
+    event.notification.data?.url || './',
+    self.location.origin
+  ).href;
 
   event.waitUntil(
-    clients.openWindow(
-      event.notification.data?.url || './'
-    )
+    self.clients.matchAll({type: 'window', includeUncontrolled: true}).then(async (windowClients) => {
+      for (const client of windowClients) {
+        if ('navigate' in client && 'focus' in client) {
+          await client.navigate(targetUrl);
+          return client.focus();
+        }
+      }
+      return self.clients.openWindow(targetUrl);
+    })
   );
 });
