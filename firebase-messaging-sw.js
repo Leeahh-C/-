@@ -2,12 +2,12 @@ importScripts("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js
 importScripts("https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js");
 
 firebase.initializeApp({
-  apiKey: "你的 Firebase apiKey",
+  apiKey: "AIzaSyCKXoFSvJUWQ8QDNNmQuJvAwSzYKZ5EELM",
   authDomain: "railopoly.firebaseapp.com",
   projectId: "railopoly",
   storageBucket: "railopoly.firebasestorage.app",
   messagingSenderId: "799199740741",
-  appId: "你的 Firebase appId"
+  appId: "1:799199740741:web:742802d2643c3a43c4742c"
 });
 
 const messaging = firebase.messaging();
