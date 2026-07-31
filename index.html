@@ -38,9 +38,7 @@
 
 body:has(#roomGate:not(.hidden)){height:100dvh;overflow:hidden;overscroll-behavior:none}
 
-.notification-box{display:grid;gap:10px}.notification-row{display:flex;gap:10px;align-items:center;justify-content:space-between}.notification-state{font-size:13px;color:var(--muted);line-height:1.5}.notification-state.ok{color:var(--good);font-weight:800}.notification-state.bad{color:var(--bad);font-weight:800}
-
-.message-list{display:grid;gap:10px}.message-item{background:#f7fbfa;border-radius:16px;padding:12px;border-left:5px solid #9bcac5}.message-item.urgent{background:#fff0f0;border-left-color:#c54f57}.message-item.important{background:#fff8df;border-left-color:#f6bd39}.message-meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:5px}.message-confirm{font-size:12px;color:var(--good);font-weight:800;margin-top:7px}.system-message-modal{position:fixed;inset:0;background:rgba(5,28,34,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:120}.system-message-modal.show{display:flex}.system-message-card{width:min(430px,100%);background:var(--paper);border-radius:28px;padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.32);border-top:10px solid var(--rail)}.system-message-card.urgent{border-top-color:var(--bad);animation:urgentPulse 1s infinite}.system-message-card.important{border-top-color:var(--chance)}.system-message-card h2{margin:0 0 12px;font-size:25px}.system-message-card p{white-space:pre-line;font-size:18px;line-height:1.55}.system-message-countdown{font-size:13px;color:var(--muted);margin-top:12px}.system-message-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px}@keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 rgba(197,79,87,.25),0 25px 70px rgba(0,0,0,.32)}50%{box-shadow:0 0 0 12px rgba(197,79,87,.08),0 25px 70px rgba(0,0,0,.32)}}
+.message-list{display:grid;gap:10px}.message-item{background:#f3f8ff;border-radius:16px;padding:12px;border-left:5px solid #3f7fc4}.message-item.system{background:#eef9f2;border-left-color:#238b68}.message-item.urgent{background:#fff0f0;border-left-color:#c54f57}.message-item.important{background:#fff8df;border-left-color:#f6bd39}.unread-badge{display:none;position:absolute;top:2px;right:10px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#c54f57;color:white;font-size:11px;line-height:18px;text-align:center}.nav{position:relative}.unread-badge.show{display:block}body.urgent-alert{animation:urgentScreenPulse 1s infinite}@keyframes urgentScreenPulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(197,79,87,0)}50%{box-shadow:inset 0 0 0 10px rgba(197,79,87,.75)}}.message-meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:5px}.message-confirm{font-size:12px;color:var(--good);font-weight:800;margin-top:7px}.system-message-modal{position:fixed;inset:0;background:rgba(5,28,34,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:120}.system-message-modal.show{display:flex}.system-message-card{width:min(430px,100%);background:var(--paper);border-radius:28px;padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.32);border-top:10px solid var(--rail)}.system-message-card.urgent{border-top-color:var(--bad);animation:urgentPulse 1s infinite}.system-message-card.important{border-top-color:var(--chance)}.system-message-card h2{margin:0 0 12px;font-size:25px}.system-message-card p{white-space:pre-line;font-size:18px;line-height:1.55}.system-message-countdown{font-size:13px;color:var(--muted);margin-top:12px}.system-message-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px}@keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 rgba(197,79,87,.25),0 25px 70px rgba(0,0,0,.32)}50%{box-shadow:0 0 0 12px rgba(197,79,87,.08),0 25px 70px rgba(0,0,0,.32)}}
 </style>
 </head>
 <body>
@@ -60,25 +58,21 @@ body:has(#roomGate:not(.hidden)){height:100dvh;overflow:hidden;overscroll-behavi
 <section id="players" class="page"><div class="panel"><h3 class="section-title">六位玩家</h3><div id="playerList" class="players"></div></div><div class="panel"><h3 id="rankTitle" class="section-title">積分排行</h3><div id="ranking" class="rank"></div></div></section>
 <section id="roles" class="page"><div id="roleTools"></div></section>
 <section id="messages" class="page"><div class="panel settings"><h3 class="section-title">訊息中心</h3><div id="messageComposer"></div></div><div class="panel"><h3 class="section-title">房間訊息</h3><div class="admin-note">新訊息會在所有符合對象的裝置上跳出確認視窗；5 秒內未按下確認，系統會自動標記為已確認。</div><div id="systemMessageList" class="message-list"></div></div><div class="panel"><h3 class="section-title">最近紀錄</h3><div id="recent" class="history"></div></div></section>
-<section id="settings" class="page"><div class="panel settings"><h3 class="section-title">房間</h3><div id="roomInfo"></div><button class="secondary" style="width:100%;margin-top:10px" onclick="leaveRoom()">離開房間</button></div><div class="panel settings notification-box"><h3 class="section-title">推播通知</h3><div class="notification-row"><div><b>🔔 主持人公告與安全通報</b><div id="notificationStatus" class="notification-state">正在檢查通知狀態…</div></div><button id="enableNotificationBtn" class="primary" type="button" onclick="enableNotifications()">開啟通知</button></div><div class="admin-note">iPhone 請先用 Safari 將 Railopoly 加入主畫面，再從主畫面圖示開啟並按下此按鈕。</div></div><div class="panel settings"><h3 class="section-title">身分與職位</h3><p class="subtitle">先選擇這支手機目前由哪位玩家使用，再為六位玩家分配六個不同職位。</p><label>這支手機的玩家</label><select id="devicePlayer" onchange="setDevicePlayer(this.value)"></select><div id="roleInputs" class="role-grid"></div></div><div class="panel settings"><h3 class="section-title">玩家名稱</h3><div id="nameInputs"></div></div><div class="panel settings"><h3 class="section-title">遊戲管理</h3><p class="subtitle">主持人可開始或重設遊戲。資料會即時同步到 Firebase 雲端；每支手機請在上方選擇自己的玩家身分。</p><button id="startBtn" class="mini" style="width:100%;margin-top:16px;padding:12px" onclick="startOfficialGame()">正式開始三日遊戲</button><button id="resetBtn" class="danger" onclick="resetGame()">清除目前資料並回到測試模式</button></div></section>
+<section id="settings" class="page"><div class="panel settings"><h3 class="section-title">房間</h3><div id="roomInfo"></div><button class="secondary" style="width:100%;margin-top:10px" onclick="leaveRoom()">離開房間</button></div><div class="panel settings"><h3 class="section-title">身分與職位</h3><p class="subtitle">先選擇這支手機目前由哪位玩家使用，再為六位玩家分配六個不同職位。</p><label>這支手機的玩家</label><select id="devicePlayer" onchange="setDevicePlayer(this.value)"></select><div id="roleInputs" class="role-grid"></div></div><div class="panel settings"><h3 class="section-title">玩家名稱</h3><div id="nameInputs"></div></div><div class="panel settings"><h3 class="section-title">遊戲管理</h3><p class="subtitle">主持人可開始或重設遊戲。資料會即時同步到 Firebase 雲端；每支手機請在上方選擇自己的玩家身分。</p><button id="startBtn" class="mini" style="width:100%;margin-top:16px;padding:12px" onclick="startOfficialGame()">正式開始三日遊戲</button><button id="resetBtn" class="danger" onclick="resetGame()">清除目前資料並回到測試模式</button></div></section>
 </main>
 </div>
-<nav class="bottom"><button class="nav active" data-page="home" onclick="showPage('home',this)"><b>🏠</b>遊戲</button><button class="nav" data-page="players" onclick="showPage('players',this)"><b>👥</b>玩家</button><button class="nav" data-page="roles" onclick="showPage('roles',this)"><b>🧭</b>職務</button><button class="nav" data-page="messages" onclick="showPage('messages',this)"><b>💬</b>訊息</button><button class="nav" data-page="settings" onclick="showPage('settings',this)"><b>⚙️</b>設定</button></nav>
+<nav class="bottom"><button class="nav active" data-page="home" onclick="showPage('home',this)"><b>🏠</b>遊戲</button><button class="nav" data-page="players" onclick="showPage('players',this)"><b>👥</b>玩家</button><button class="nav" data-page="roles" onclick="showPage('roles',this)"><b>🧭</b>職務</button><button class="nav" data-page="messages" onclick="showPage('messages',this)"><b>💬</b>訊息<span id="messageUnreadBadge" class="unread-badge"></span></button><button class="nav" data-page="settings" onclick="showPage('settings',this)"><b>⚙️</b>設定</button></nav>
 <div id="roomGate" class="overlay-lock"><div class="app-entry" aria-label="Railopoly 首頁"><div class="app-entry-spacer"></div><div class="entry-actions"><button class="entry-hotspot create" aria-label="建立房間" onclick="createRoom()">🎲 建立房間</button><button class="entry-hotspot join" aria-label="加入房間" onclick="openJoinPanel()">🎟️ 加入房間</button></div></div></div><div id="joinPop" class="join-pop"><div class="join-card"><button class="join-close" onclick="closeJoinPanel()" aria-label="關閉">×</button><div class="brand"><div class="logo">🚂</div><div><h1>加入房間</h1><p class="subtitle">輸入主持人提供的 6 碼房號</p></div></div><label style="display:block;margin-top:18px">房號</label><input id="joinRoomCode" maxlength="6" placeholder="例如 A8K3P2"><button class="primary" style="width:100%;margin-top:12px" onclick="joinRoom()">加入房間</button></div></div><div id="systemMessageModal" class="system-message-modal"><div id="systemMessageBody"></div></div><div id="modal" class="modal" onclick="backdrop(event)"><div id="modalBody"></div></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-messaging-compat.js"></script>
 <script>
 function openJoinPanel(){const panel=document.getElementById('joinPop');if(!panel)return;panel.classList.add('show');setTimeout(()=>document.getElementById('joinRoomCode')?.focus(),50)}
 function closeJoinPanel(){document.getElementById('joinPop')?.classList.remove('show')}
 const firebaseConfig={apiKey:"AIzaSyCKXoFSvJUWQ8QDNNmQuJvAwSzYKZ5EELM",authDomain:"railopoly.firebaseapp.com",projectId:"railopoly",storageBucket:"railopoly.firebasestorage.app",messagingSenderId:"799199740741",appId:"1:799199740741:web:742802d2643c3a43c4742c",measurementId:"G-1W57QHQCZF"};
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(),db=firebase.firestore();
-const VAPID_PUBLIC_KEY='BHuXb2qZ9mqACv2ojvffkJnfO4t4e4gVXo6ivq_JPRlcnXg4BtbYE4KCwEY68gaGF1RyDmN3uvlBy-r7ZZw9DJ0';
-const messaging=firebase.messaging.isSupported()?firebase.messaging():null;
-let currentPushToken=localStorage.getItem('railopolyPushToken')||'';
-let roomRef=null,roomUnsub=null,roomId=(localStorage.getItem("railopolyRoomId")||"").toUpperCase();
+let roomRef=null,roomUnsub=null,liveEventUnsub=null,roomId=(localStorage.getItem("railopolyRoomId")||"").toUpperCase();
 let cloudReady=false,applyingCloud=false,lastSeenSharedCard="";
 const cards={
 chance:[
@@ -152,67 +146,20 @@ if(!state.navigator)state.navigator={station:'',toilet:'',luggage:'',transfer:''
 if(!state.medical)state.medical={checks:{water:false,toilet:false,luggage:false,kit:false,sun:false,well:false},statuses:{},reminders:[],completed:0};
 if(state.devicePlayer===undefined)state.devicePlayer=0;
 state.players=state.players.map((p,i)=>({...p,role:p.role||roles[i].name,chanceCards:Array.isArray(p.chanceCards)?p.chanceCards:[]}));normalizeCardState();
-async function getServiceWorkerRegistration(){
- if(!('serviceWorker' in navigator))throw new Error('此瀏覽器不支援 Service Worker');
- const existing=await navigator.serviceWorker.getRegistration('./');
- return existing||navigator.serviceWorker.register('./service-worker.js');
+async function publishLiveEvent(event){
+ if(!roomId||!auth.currentUser)return;
+ const payload={...event,id:event.id||newEventId(),createdBy:auth.currentUser.uid,createdByPlayerIndex:state.devicePlayer,createdByName:currentUser().name,createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+ try{await db.collection('rooms').doc(roomId).collection('liveEvents').doc(payload.id).set(payload)}catch(err){console.error('即時事件發布失敗',err)}
 }
-function notificationSupportMessage(){
- if(!window.isSecureContext)return'通知需要 HTTPS 安全連線';
- if(!('Notification' in window))return'此瀏覽器不支援通知';
- if(!messaging)return'此裝置或瀏覽器不支援 Firebase 推播';
- if(/iPhone|iPad|iPod/.test(navigator.userAgent)&&!window.matchMedia('(display-mode: standalone)').matches)return'iPhone 請先加入主畫面，再從 Railopoly 圖示開啟';
- return'';
-}
-function updateNotificationUI(message=''){
- const status=document.getElementById('notificationStatus'),button=document.getElementById('enableNotificationBtn');
- if(!status||!button)return;
- const unsupported=notificationSupportMessage();
- status.className='notification-state';
- if(unsupported){status.textContent=unsupported;status.classList.add('bad');button.disabled=true;button.textContent='目前無法開啟';return}
- button.disabled=false;
- if(Notification.permission==='granted'&&currentPushToken){status.textContent=message||'通知已開啟；此裝置可接收公告與安全通報';status.classList.add('ok');button.textContent='重新登記通知'}
- else if(Notification.permission==='denied'){status.textContent='通知已被拒絕，請到 iPhone「設定 → 通知 → Railopoly」重新允許';status.classList.add('bad');button.textContent='通知已被拒絕'}
- else{status.textContent=message||'尚未開啟通知';button.textContent='開啟通知'}
-}
-async function savePushToken(token){
- if(!roomId||!auth.currentUser)throw new Error('請先建立或加入房間');
- const player=currentUser();
- await db.collection('rooms').doc(roomId).collection('pushTokens').doc(auth.currentUser.uid).set({
-  token,uid:auth.currentUser.uid,playerIndex:state.devicePlayer,playerName:player.name,role:player.role,enabled:true,
-  userAgent:navigator.userAgent,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
- },{merge:true});
- currentPushToken=token;localStorage.setItem('railopolyPushToken',token);
-}
-async function syncPushTokenProfile(){
- if(!currentPushToken||Notification.permission!=='granted'||!roomId||!auth.currentUser)return;
- try{await savePushToken(currentPushToken)}catch(err){console.warn('更新通知身分失敗',err)}
-}
-async function enableNotifications(){
- try{
-  const unsupported=notificationSupportMessage();if(unsupported)throw new Error(unsupported);
-  if(!roomId)throw new Error('請先建立或加入房間');
-  const permission=await Notification.requestPermission();
-  if(permission!=='granted'){updateNotificationUI();return}
-  const registration=await getServiceWorkerRegistration();
-  const token=await messaging.getToken({vapidKey:VAPID_PUBLIC_KEY,serviceWorkerRegistration:registration});
-  if(!token)throw new Error('無法取得此裝置的推播識別碼');
-  await savePushToken(token);updateNotificationUI('通知已開啟；可接收主持人公告、身體狀況與醫護提醒');
-  await registration.showNotification('Railopoly 通知已開啟',{body:'這支裝置已完成推播登記。',icon:'./icon-192.png',badge:'./icon-192.png',tag:'railopoly-enabled'});
- }catch(err){console.error(err);updateNotificationUI(err.message);alert(`開啟通知失敗：${err.message}`)}
-}
-async function queuePushEvent({type,title,body,target='all',roles=[],playerIndexes=[],priority='normal'}){
+async function addSystemMessage({type,title,body,target='all',roles=[],playerIndexes=[],priority='normal'}){
  if(!roomId||!auth.currentUser)return;
  if(!Array.isArray(state.systemMessages))state.systemMessages=[];
- const message={
-  id:newEventId(),type,title,body,target,roles,playerIndexes,priority,
-  createdBy:auth.currentUser.uid,createdByPlayerIndex:state.devicePlayer,
-  createdByName:currentUser().name,createdAt:new Date().toISOString(),confirmedBy:[]
- };
- state.systemMessages.unshift(message);
- state.systemMessages=state.systemMessages.slice(0,100);
- await save();
- checkPendingSystemMessages();
+ const message={id:newEventId(),type,title,body,target,roles,playerIndexes,priority,createdBy:auth.currentUser.uid,createdByPlayerIndex:state.devicePlayer,createdByName:currentUser().name,createdAt:new Date().toISOString(),confirmedBy:[]};
+ state.systemMessages.unshift(message);state.systemMessages=state.systemMessages.slice(0,100);
+ // 發送者立即顯示，不等待 Firestore 回傳
+ if(isMessageForDevice(message)&&!(message.confirmedBy||[]).includes(state.devicePlayer))showSystemMessage(message);
+ await Promise.all([save(false),publishLiveEvent({kind:'system-message',...message})]);
+ render();
 }
 function isMessageForDevice(message){
  if(!message)return false;
@@ -237,6 +184,7 @@ function showSystemMessage(message){
  if(!body||!overlay)return;
  body.innerHTML=`<div class="system-message-card ${level}"><div class="card-type">${escapeHtml(message.type||'系統訊息')}</div><h2>${escapeHtml(message.title||'Railopoly 訊息')}</h2><p>${escapeHtml(message.body||'')}</p><div id="systemMessageCountdown" class="system-message-countdown">5 秒內未按確認，系統將自動確認。</div><div class="system-message-actions"><button class="primary" type="button" onclick="confirmSystemMessage('${message.id}',false)">我知道了</button></div></div>`;
  overlay.classList.add('show');
+ document.body.classList.toggle('urgent-alert',message.priority==='urgent');
  if(message.priority==='urgent'&&navigator.vibrate)navigator.vibrate([250,120,250,120,400]);
  clearInterval(systemMessageTimer);
  systemMessageTimer=setInterval(()=>{
@@ -255,20 +203,11 @@ async function confirmSystemMessage(id,auto=false){
   message.lastConfirmWasAutomatic=auto;
  }
  clearInterval(systemMessageTimer);systemMessageTimer=null;activeSystemMessageId='';
- document.getElementById('systemMessageModal')?.classList.remove('show');
- await save();
+ document.getElementById('systemMessageModal')?.classList.remove('show');document.body.classList.remove('urgent-alert');
+ await save(false);render();
  setTimeout(checkPendingSystemMessages,100);
 }
 
-if(messaging){messaging.onMessage(async payload=>{
- const data=payload.data||{},notice=payload.notification||{};
- const title=data.title||notice.title||'Railopoly 通知';
- const body=data.body||notice.body||'你有一則新訊息';
- if(Notification.permission==='granted'){
-  const registration=await getServiceWorkerRegistration();
-  registration.showNotification(title,{body,icon:'./icon-192.png',badge:'./icon-192.png',tag:data.tag||'railopoly-message',data:{url:data.url||'./'}});
- }
-});}
 function currentUser(){return state.players[state.devicePlayer]||state.players[0]}
 function hasRole(name){return currentUser().role===name}
 function playerGroupIndex(i){return state.grouping.groups.findIndex(g=>g.members.includes(i))}
@@ -389,7 +328,7 @@ function draw(type){
  state.sharedCard=event;lastSeenSharedCard=event.id;localStorage.setItem('railopolySeenCard_'+roomId,event.id);logEntry(type,`抽到「${c[0]}」`,state.turn);
  if(isEffect)state.players[state.turn].chanceCards.push({...event});
  if(type==='task'&&isSpecialTaskTitle(event.title))state.taskRecords.unshift({...event,status:'pending',awards:[]});
- save();showSharedCard(event,isEffect&&event.drawerIndex===state.devicePlayer)
+ save(false);render();showSharedCard(event,isEffect&&event.drawerIndex===state.devicePlayer);publishLiveEvent({kind:'card',card:event})
 }
 function showSharedCard(event,decision){
  const names={chance:'機會卡',fate:'命運卡',task:'任務卡'},colors={chance:'var(--chance)',fate:'var(--fate)',task:'var(--task)'};
@@ -533,23 +472,23 @@ function change(i,key,delta){
  if(key==='score'&&!hasRole('雜務')){alert('只有雜務可以調整積分。');return}
  if(key==='money')changeStats(i,{money:delta});else changeStats(i,{score:delta});save()
 }
-function setDevicePlayer(v){state.devicePlayer=Number(v);localStorage.setItem('railopolyDevicePlayer',String(state.devicePlayer));render();syncPushTokenProfile()}
-async function postAnnouncement(){if(!hasRole('主持人'))return alert('只有主持人可以發布公告。');const el=document.getElementById('announcementInput');const text=(el?.value||'').trim();if(!text)return alert('請先輸入公告內容。');state.announcements.unshift({text,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});state.announcements=state.announcements.slice(0,20);logEntry('announcement',text);await save();await queuePushEvent({type:'announcement',title:'📢 主持人公告',body:text,target:'all',priority:'important'});if(el)el.value=''}
+function setDevicePlayer(v){state.devicePlayer=Number(v);localStorage.setItem('railopolyDevicePlayer',String(state.devicePlayer));render();checkPendingSystemMessages()}
+async function postAnnouncement(){if(!hasRole('主持人'))return alert('只有主持人可以發布公告。');const el=document.getElementById('announcementInput');const text=(el?.value||'').trim();if(!text)return alert('請先輸入公告內容。');state.announcements.unshift({text,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});state.announcements=state.announcements.slice(0,20);logEntry('announcement',text);await save(false);await addSystemMessage({type:'announcement',title:'📢 主持人公告',body:text,target:'all',priority:'important'});if(el)el.value=''}
 function buildTemporaryRoles(){const assignments={};state.grouping.groups.forEach((g,groupIndex)=>{shuffle([...(g.members||[])]).forEach((playerIndex,i)=>{const role=temporaryRoles[Math.min(i,temporaryRoles.length-1)];assignments[playerIndex]={...role,groupIndex,groupName:g.name}})});return assignments}
-async function startGroupMission(){if(!hasRole('主持人'))return alert('只有主持人可以開始分組任務。');const nonEmpty=state.grouping.groups.filter(g=>(g.members||[]).length);if(nonEmpty.length<2)return alert('請先把玩家分到至少兩個有成員的隊伍。');if(state.grouping.missionActive)return alert('目前已在進行分組任務。');if(!confirm('開始分組任務後，各隊可分頭行動，系統會自動指派臨時職位。確定開始嗎？'))return;state.grouping.missionActive=true;state.grouping.missionRound=(Number(state.grouping.missionRound)||0)+1;state.grouping.tempRoles=buildTemporaryRoles();logEntry('group',`開始第 ${state.grouping.missionRound} 次分組任務，已自動指派臨時職位`);await save();await queuePushEvent({type:'group-start',title:'🎯 分組任務開始',body:`第 ${state.grouping.missionRound} 次分組任務開始，請查看職務頁的臨時職位。`,target:'all',priority:'important'})}
-async function endGroupMission(){if(!hasRole('主持人'))return alert('只有主持人可以結束分組任務。');if(!state.grouping.missionActive)return alert('目前沒有進行中的分組任務。');if(!confirm('確定結束分組任務並重新集合？隊伍編制與積分會保留。'))return;state.grouping.missionActive=false;state.grouping.tempRoles={};logEntry('group','結束分組任務並重新集合');await save();await queuePushEvent({type:'group-end',title:'✅ 分組任務結束',body:'分組任務已結束，請全員重新集合。',target:'all',priority:'important'})}
+async function startGroupMission(){if(!hasRole('主持人'))return alert('只有主持人可以開始分組任務。');const nonEmpty=state.grouping.groups.filter(g=>(g.members||[]).length);if(nonEmpty.length<2)return alert('請先把玩家分到至少兩個有成員的隊伍。');if(state.grouping.missionActive)return alert('目前已在進行分組任務。');if(!confirm('開始分組任務後，各隊可分頭行動，系統會自動指派臨時職位。確定開始嗎？'))return;state.grouping.missionActive=true;state.grouping.missionRound=(Number(state.grouping.missionRound)||0)+1;state.grouping.tempRoles=buildTemporaryRoles();logEntry('group',`開始第 ${state.grouping.missionRound} 次分組任務，已自動指派臨時職位`);await save(false);await addSystemMessage({type:'group-start',title:'🎯 分組任務開始',body:`第 ${state.grouping.missionRound} 次分組任務開始，請查看職務頁的臨時職位。`,target:'all',priority:'important'})}
+async function endGroupMission(){if(!hasRole('主持人'))return alert('只有主持人可以結束分組任務。');if(!state.grouping.missionActive)return alert('目前沒有進行中的分組任務。');if(!confirm('確定結束分組任務並重新集合？隊伍編制與積分會保留。'))return;state.grouping.missionActive=false;state.grouping.tempRoles={};logEntry('group','結束分組任務並重新集合');await save(false);await addSystemMessage({type:'group-end',title:'✅ 分組任務結束',body:'分組任務已結束，請全員重新集合。',target:'all',priority:'important'})}
 function movePlayerGroup(i,g){if(!hasRole('主持人'))return alert('只有主持人可以調整分組。');if(state.grouping.missionActive)return alert('分組任務進行中，請先結束任務再調整隊伍。');if(!Number.isInteger(g)||g<0||g>=state.grouping.groups.length)return;state.grouping.groups.forEach(x=>x.members=x.members.filter(n=>n!==i));state.grouping.groups[g].members.push(i);save()}
 function updateNavigator(key,val){if(!hasRole('導航員'))return;state.navigator[key]=val;localStorage.setItem('railopolyState',JSON.stringify(state))}function commitNavigator(){if(hasRole('導航員'))save(false)}
-async function publishStationInfo(){if(!hasRole('導航員'))return alert('只有導航員可以發布到站情報。');state.navigator.completed++;logEntry('navigator',`更新 ${state.navigator.station||'目前車站'} 到站情報`);await save();const body=[state.navigator.station&&`車站：${state.navigator.station}`,state.navigator.toilet&&`洗手間：${state.navigator.toilet}`,state.navigator.luggage&&`行李寄放：${state.navigator.luggage}`,state.navigator.transfer&&`轉乘：${state.navigator.transfer}`,state.navigator.meeting&&`集合：${state.navigator.meeting}`,state.navigator.returnTime&&`最晚回站：${state.navigator.returnTime}`].filter(Boolean).join('\n');await queuePushEvent({type:'station-info',title:'🚉 到站情報',body:body||'導航員已更新到站情報',target:'all',priority:'important'});alert('到站情報已發布。')}
-async function publishRoute(){if(!hasRole('導航員'))return alert('只有導航員可以發布任務路線。');logEntry('navigator',`發布任務路線：${state.navigator.routeTarget||'未命名目的地'}`);await save();const body=[state.navigator.routeTarget&&`目的地：${state.navigator.routeTarget}`,state.navigator.routeMinutes&&`步行：約 ${state.navigator.routeMinutes} 分鐘`,state.navigator.routeNote&&`注意：${state.navigator.routeNote}`].filter(Boolean).join('\n');await queuePushEvent({type:'route',title:'🗺️ 任務路線',body:body||'導航員已發布任務路線',target:'all',priority:'important'});alert('任務路線已發布。')}
+async function publishStationInfo(){if(!hasRole('導航員'))return alert('只有導航員可以發布到站情報。');state.navigator.completed++;logEntry('navigator',`更新 ${state.navigator.station||'目前車站'} 到站情報`);await save(false);const body=[state.navigator.station&&`車站：${state.navigator.station}`,state.navigator.toilet&&`洗手間：${state.navigator.toilet}`,state.navigator.luggage&&`行李寄放：${state.navigator.luggage}`,state.navigator.transfer&&`轉乘：${state.navigator.transfer}`,state.navigator.meeting&&`集合：${state.navigator.meeting}`,state.navigator.returnTime&&`最晚回站：${state.navigator.returnTime}`].filter(Boolean).join('\n');await addSystemMessage({type:'station-info',title:'🚉 到站情報',body:body||'導航員已更新到站情報',target:'all',priority:'important'});alert('到站情報已發布。')}
+async function publishRoute(){if(!hasRole('導航員'))return alert('只有導航員可以發布任務路線。');logEntry('navigator',`發布任務路線：${state.navigator.routeTarget||'未命名目的地'}`);await save(false);const body=[state.navigator.routeTarget&&`目的地：${state.navigator.routeTarget}`,state.navigator.routeMinutes&&`步行：約 ${state.navigator.routeMinutes} 分鐘`,state.navigator.routeNote&&`注意：${state.navigator.routeNote}`].filter(Boolean).join('\n');await addSystemMessage({type:'route',title:'🗺️ 任務路線',body:body||'導航員已發布任務路線',target:'all',priority:'important'});alert('任務路線已發布。')}
 function toggleMedicalCheck(key,checked){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以操作此功能。');state.medical.checks[key]=checked;save()}
 function completeMedicalCheck(){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以完成檢查。');const done=Object.values(state.medical.checks).filter(Boolean).length;if(done<6)return alert('請完成全部六項檢查。');state.medical.completed++;logEntry('medical','完成全組出發前安全檢查');save();alert('後勤安全檢查完成。')}
-async function setOwnStatus(status){state.medical.statuses[state.devicePlayer]=status;logEntry('status',`回報狀態：${status}`);await save();const urgent=status.includes('🔴')||status.includes('🟠')||status.includes('🟡');await queuePushEvent({type:'health',title:urgent?'🚨 身體狀況通報':'🩺 旅行狀態回報',body:`${currentUser().name}：${status}`,target:urgent?'all':'roles',roles:['主持人','後勤醫療'],priority:urgent?'urgent':'important'})}
-async function sendReminder(text){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以發送提醒。');state.medical.reminders.unshift({text,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});state.medical.reminders=state.medical.reminders.slice(0,20);logEntry('medical',text);await save();await queuePushEvent({type:'medical-reminder',title:'🩹 醫護提醒',body:text,target:'all',priority:'important'})}
+async function setOwnStatus(status){state.medical.statuses[state.devicePlayer]=status;logEntry('status',`回報狀態：${status}`);await save(false);const urgent=status.includes('🔴')||status.includes('🟠')||status.includes('🟡');await addSystemMessage({type:'health',title:urgent?'🚨 身體狀況通報':'🩺 旅行狀態回報',body:`${currentUser().name}：${status}`,target:urgent?'all':'roles',roles:['主持人','後勤醫療'],priority:urgent?'urgent':'important'})}
+async function sendReminder(text){if(!hasRole('後勤醫療'))return alert('只有後勤醫療可以發送提醒。');state.medical.reminders.unshift({text,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});state.medical.reminders=state.medical.reminders.slice(0,20);logEntry('medical',text);await save(false);await addSystemMessage({type:'medical-reminder',title:'🩹 醫護提醒',body:text,target:'all',priority:'important'})}
 function setRole(i,v){
  const other=state.players.findIndex((p,idx)=>idx!==i&&p.role===v);
  if(other>=0){const old=state.players[i].role;state.players[other].role=old}
- state.players[i].role=v;save();if(i===state.devicePlayer)syncPushTokenProfile()
+ state.players[i].role=v;save()
 }
 function rename(i,v){state.players[i].name=v.trim()||`玩家 ${i+1}`;save()}
 function render(){
@@ -575,9 +514,10 @@ function render(){
  else tools+=`<div class="tool-card">此職位目前沒有專屬操作面板；仍可使用下方的個人狀態回報。</div>`;
  tools+=`<div class="panel" style="box-shadow:none;margin-top:14px"><h4>我的旅行狀態</h4><div class="status-grid">${statusOptions.map(x=>`<button class="status-btn ${state.medical.statuses[state.devicePlayer]===x?'active':''}" onclick="setOwnStatus('${x}')">${x}</button>`).join('')}</div></div></div>`;
  roleTools.innerHTML=tools;
- const msgList=(state.systemMessages||[]);systemMessageList.innerHTML=msgList.length?msgList.map(m=>{const confirmed=(m.confirmedBy||[]).length;const cls=m.priority==='urgent'?'urgent':m.priority==='important'?'important':'';return `<div class="message-item ${cls}"><div class="message-meta"><span>${escapeHtml(m.title||'訊息')}</span><span>${new Date(m.createdAt||Date.now()).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div><div>${escapeHtml(m.body||'')}</div><div class="message-confirm">已確認 ${confirmed}/${state.players.length} 人</div></div>`}).join(''):'<div class="empty">目前沒有房間訊息</div>';
+ const msgList=(state.systemMessages||[]);systemMessageList.innerHTML=msgList.length?msgList.map(m=>{const confirmed=(m.confirmedBy||[]).length;const cls=m.priority==='urgent'?'urgent':m.priority==='important'?'important':m.priority==='system'?'system':'';return `<div class="message-item ${cls}"><div class="message-meta"><span>${escapeHtml(m.title||'訊息')}</span><span>${new Date(m.createdAt||Date.now()).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div><div>${escapeHtml(m.body||'')}</div><div class="message-confirm">已確認 ${confirmed}/${state.players.length} 人</div></div>`}).join(''):'<div class="empty">目前沒有房間訊息</div>';
  messageComposer.innerHTML=hasRole('主持人')?`<label>主持人公告</label><input id="announcementInput" placeholder="例如：18:30 花蓮站集合"><button class="primary" style="width:100%;margin-top:8px" onclick="postAnnouncement()">發布公告</button><div class="admin-note">公告會立即同步到同房間裝置，並跳出 5 秒確認視窗。</div>`:`<div class="empty">只有主持人可以在此發布公告。</div>`;
- startBtn.classList.toggle('locked',!hasRole('主持人'));resetBtn.classList.toggle('locked',!hasRole('主持人'));updateNotificationUI();
+ const unread=(state.systemMessages||[]).filter(m=>isMessageForDevice(m)&&!(m.confirmedBy||[]).includes(state.devicePlayer)).length;const badge=document.getElementById('messageUnreadBadge');if(badge){badge.textContent=String(Math.min(unread,99));badge.classList.toggle('show',unread>0)}
+ startBtn.classList.toggle('locked',!hasRole('主持人'));resetBtn.classList.toggle('locked',!hasRole('主持人'));
 }
 function showPage(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));btn.classList.add('active');render()}
 function closeModal(){modal.classList.remove('show')}
@@ -588,14 +528,32 @@ render();
 function randomRoomId(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('')}
 async function createRoom(){if(!auth.currentUser)return alert('仍在登入 Firebase，請稍候再試。');let code=randomRoomId();while((await db.collection('rooms').doc(code).get()).exists)code=randomRoomId();roomId=code;localStorage.setItem('railopolyRoomId',roomId);roomGate.classList.add('hidden');connectRoom(true)}
 function joinRoom(){const code=(document.getElementById('joinRoomCode').value||'').trim().toUpperCase();if(!/^[A-Z2-9]{6}$/.test(code))return alert('請輸入正確的 6 碼房號。');roomId=code;localStorage.setItem('railopolyRoomId',roomId);roomGate.classList.add('hidden');connectRoom(false)}
-async function leaveRoom(){if(!confirm('確定離開目前房間？'))return;const oldRoomId=roomId;try{if(oldRoomId&&auth.currentUser)await db.collection('rooms').doc(oldRoomId).collection('pushTokens').doc(auth.currentUser.uid).delete()}catch(err){console.warn('移除推播登記失敗',err)}if(roomUnsub)roomUnsub();roomUnsub=null;roomRef=null;roomId='';cloudReady=false;currentPushToken='';localStorage.removeItem('railopolyRoomId');localStorage.removeItem('railopolyPushToken');roomGate.classList.remove('hidden');render()}
+async function leaveRoom(){if(!confirm('確定離開目前房間？'))return;if(roomUnsub)roomUnsub();if(liveEventUnsub)liveEventUnsub();roomUnsub=null;liveEventUnsub=null;roomRef=null;roomId='';cloudReady=false;localStorage.removeItem('railopolyRoomId');roomGate.classList.remove('hidden');render()}
 async function connectRoom(createIfMissing){
- if(!roomId||!auth.currentUser)return;cloudReady=false;roomRef=db.collection('rooms').doc(roomId);if(roomUnsub)roomUnsub();
+ if(!roomId||!auth.currentUser)return;cloudReady=false;roomRef=db.collection('rooms').doc(roomId);if(roomUnsub)roomUnsub();if(liveEventUnsub)liveEventUnsub();
  const first=await roomRef.get();if(!first.exists&&!createIfMissing){alert('找不到這個房間。');localStorage.removeItem('railopolyRoomId');roomId='';roomGate.classList.remove('hidden');return}
  if(!first.exists){const cloudState=JSON.parse(JSON.stringify(state));delete cloudState.devicePlayer;await roomRef.set({state:cloudState,createdAt:firebase.firestore.FieldValue.serverTimestamp()})}
+ const liveSince=firebase.firestore.Timestamp.fromMillis(Date.now()-3000);
+ liveEventUnsub=roomRef.collection('liveEvents').where('createdAt','>=',liveSince).orderBy('createdAt','asc').onSnapshot(snapshot=>{
+  snapshot.docChanges().forEach(change=>{
+   if(change.type!=='added')return;
+   const data=change.doc.data()||{},eventId=data.id||change.doc.id;
+   const seenKey='railopolyLiveEvent_'+roomId+'_'+eventId;
+   if(localStorage.getItem(seenKey))return;
+   localStorage.setItem(seenKey,'1');
+   if(data.createdBy===auth.currentUser?.uid)return;
+   if(data.kind==='card'&&data.card){const card=data.card;localStorage.setItem('railopolySeenCard_'+roomId,card.id);lastSeenSharedCard=card.id;showSharedCard(card,['chance','fate'].includes(card.type)&&card.drawerIndex===state.devicePlayer&&card.status==='held');return}
+   if(data.kind==='system-message'){
+    const message={...data,createdAt:data.createdAt?.toDate?.().toISOString?.()||new Date().toISOString(),confirmedBy:Array.isArray(data.confirmedBy)?data.confirmedBy:[]};
+    if(!Array.isArray(state.systemMessages))state.systemMessages=[];
+    if(!state.systemMessages.some(m=>m.id===message.id))state.systemMessages.unshift(message);
+    localStorage.setItem('railopolyState',JSON.stringify(state));render();checkPendingSystemMessages();
+   }
+  });
+ },err=>console.error('即時事件監聽失敗',err));
  roomUnsub=roomRef.onSnapshot(async snap=>{
   if(!snap.exists)return;
-  const data=snap.data();if(data&&data.state){applyingCloud=true;const devicePlayer=Number(localStorage.getItem('railopolyDevicePlayer')||0);state={...structuredClone(defaultState),...data.state,devicePlayer};state.players=state.players.map((p,i)=>({...p,role:p.role||roles[i].name,chanceCards:Array.isArray(p.chanceCards)?p.chanceCards:[]}));if(!state.game.diceCount)state.game.diceCount=1;if(!Array.isArray(state.game.rollBonuses))state.game.rollBonuses=[];if(!Array.isArray(state.game.taskMultipliers))state.game.taskMultipliers=[];if(!state.grouping)state.grouping=structuredClone(defaultState.grouping);if(!Array.isArray(state.taskRecords))state.taskRecords=[];normalizeCardState();localStorage.setItem('railopolyState',JSON.stringify(state));applyingCloud=false;cloudReady=true;render();syncPushTokenProfile();setTimeout(checkPendingSystemMessages,50);
+  const data=snap.data();if(data&&data.state){applyingCloud=true;const devicePlayer=Number(localStorage.getItem('railopolyDevicePlayer')||0);state={...structuredClone(defaultState),...data.state,devicePlayer};state.players=state.players.map((p,i)=>({...p,role:p.role||roles[i].name,chanceCards:Array.isArray(p.chanceCards)?p.chanceCards:[]}));if(!state.game.diceCount)state.game.diceCount=1;if(!Array.isArray(state.game.rollBonuses))state.game.rollBonuses=[];if(!Array.isArray(state.game.taskMultipliers))state.game.taskMultipliers=[];if(!state.grouping)state.grouping=structuredClone(defaultState.grouping);if(!Array.isArray(state.taskRecords))state.taskRecords=[];normalizeCardState();localStorage.setItem('railopolyState',JSON.stringify(state));applyingCloud=false;cloudReady=true;render();setTimeout(checkPendingSystemMessages,50);
    const e=state.sharedCard,seen=localStorage.getItem('railopolySeenCard_'+roomId)||'';if(e&&e.id!==seen){localStorage.setItem('railopolySeenCard_'+roomId,e.id);lastSeenSharedCard=e.id;showSharedCard(e,['chance','fate'].includes(e.type)&&e.drawerIndex===state.devicePlayer&&e.status==='held')}
   }
  },err=>{console.error(err);alert('無法連接 Firestore，請確認規則已發布。')});
@@ -603,6 +561,6 @@ async function connectRoom(createIfMissing){
 auth.onAuthStateChanged(async user=>{if(!user){try{await auth.signInAnonymously()}catch(err){console.error(err);alert('匿名登入失敗，請確認 Firebase Authentication 已啟用。')}return}if(roomId){roomGate.classList.add('hidden');connectRoom(false)}else roomGate.classList.remove('hidden')});
 </script>
 
-<script>if ('serviceWorker' in navigator) { window.addEventListener('load', async () => { try { await navigator.serviceWorker.register('./service-worker.js'); updateNotificationUI(); } catch (err) { console.error(err); } }); }</script>
+<script>if ('serviceWorker' in navigator) { window.addEventListener('load', async () => { try { await navigator.serviceWorker.register('./service-worker.js'); } catch (err) { console.error(err); } }); }</script>
 </body>
 </html>
